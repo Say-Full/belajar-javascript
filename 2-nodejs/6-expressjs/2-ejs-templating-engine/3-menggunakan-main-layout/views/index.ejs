@@ -1,0 +1,21 @@
+    <h1>Yo!</h1>
+
+    <% const nama = 'Saiful'; %>
+    <h2>Halo <%= nama %> !</h2>
+    <h5> <%= npm %> </h5>
+
+    <h3>Daftar Mahasiswa</h3>
+    <% if (mahasiswa.length < 0) { %>
+        <p>Tidak ada data mahasiswa</p>
+    <% } else { %>
+        <% mahasiswa.forEach(mhs => { %>
+            <ul>
+                <li>
+                    Nama: <%= mhs.nama %>
+                </li>
+                <li>
+                    Nama: <%= mhs.npm %>
+                </li>
+            </ul>
+        <% }) %>
+    <% } %>

@@ -1,0 +1,29 @@
+/* Reset sederhana */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Kotak yg akan dimanipulasi */
+.box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin: 50px auto;
+    transition: .3s width,
+                .3s height .3s,
+                .3s margin-top .3s,
+                1s background-color;
+}
+
+/* Class untuk memanipulasi kotak */
+.size {
+    width: 150px;
+    height: 150px;
+    margin-top: 25px;
+}
+
+/* Ubah warna dalam kotak untuk, misalkan, taruh caption */
+.caption {
+    background-color: black;
+}

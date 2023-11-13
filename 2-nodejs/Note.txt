@@ -1,0 +1,500 @@
+- "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript Engine."
+    --> Runtime JS yg dibuat di dlm V8 JS engine punya chrome.
+
+- "An asynchronous event-driven JavaScript runtime designed to build scalable network applications."
+    --> Runtime asynchronous JS berbasis event yg didesain untuk membuat aplikasi jaringan yang skalabel.
+
+- Node.js bkn bhs pemrograman, melainkan runtime untuk menjalankan script JavaScript.
+
+- Runtime adlh konteks atw tmpt kita menjalankan / mengeksekusi kode.
+
+- JS adlh bhs pemrograman yg bs digunakan untuk buat web dan web itu dijalankan di browser. Browser bs menjalankan JS krn punya JS engine. Untuk Chrome, nama JS engine nya adlh V8 Engine dan ini adlh engine tercepat dan sesuai dgn perilaku Node.js. Klo di Mozilla namanya Spider Monkey dan klo di MS Edge namanya Chakra.
+
+- Pkk JS kita bs lakuin DOM, interaktivitas, Event Listener HTTP Request, dll.. Tp mslhnya JS cuma bs lakuin itu di dlm browser. Klo browsernya ditutup, JS nya gk jln. Jd konteksnya adlh browser kita krn JS engine nya ditanam di dlm browser.
+
+- Node.js (Ryan Dahl, 2009) awalnya ingin membuat web browser yg menggunanakn event loop dan single-threaded. Jd dia buat aplikasi pkk C untuk membungkus V8 Engine agar bs dijalankan secara executable (.exe) sehingga JS bs dijalankan di aplikasi lain, gk cuma terbatas di dlm browser. Jd V8 Engine bs diinstal di sistem operasinya dgn cara instal Node.js nya. Node.js bs:
+    --> Mengakses memori
+    --> Mengakses I/O (request secara network dan menerima response)
+    --> File system (bs menulis dan membaca file di/dr direktori)
+    --> Buffer (mengelola biner dr file, seperti aplikasi untuk transfer file dan streaming video)
+    --> Network (bs dijadikan web server, mengirimkan request dan menerima response dr HTTP dan HTTPS)
+    --> REPL (Read Evaluate Print Loop, command prompt untuk mengeksekusi Node.js lngsng di terminal)
+    --> Console
+    --> Cryptography
+    --> Zlib (kompresi file)
+
+- Karakteristik Node.js:
+    --> Asynchronous & Event driven
+    --> Non-blocking (krn asynchronous)
+    --> Single Threaded but highly scalable
+    --> Cross platform (satu program tp bs dijalankan di sitem operasi)
+    --> MIT License (open source)
+    --> NPM (Node Package Manager untuk download library Node.js)
+
+- Untuk perbandingan Node.js dgn PHP itu gk bs dibandingkan krn Node.js adlh runtime dan PHP adlh bhs pemrograman. Mungkin yg dimksd adlh perbandingan JS yg dijalankan menggunakan Node.js dgn PHP yg dijalankan menggunakan web server krn sama-sama untuk membuat backend aplikasi:
+    --> PHP dibuat pd thn 1994   |   Node.js dibuat pd thn 2009
+        --> Lbh bnyk komunitas dan aplikasi yg dibuat menggunakan PHP
+    
+    --> PHP pkk Zend Engine   |   Node.js pkk Chrome's V8 Engine
+
+    --> PHP mengeksekusi kodenya pkk Multi-thread dan synchronous   |   Node.js itu single-thread dan asynchronous
+        --> Klo synchronous, berarti kodenya blocking. Kerjain dlu satu task, tunggu sampe selesai baru lanjut task yg lain. Tp krn PHP multi-thread, jd yg mengerjakannya itu lbh dr satu.
+        --> Klo Node.js yg melayaninya satu tp bs kerjain task lain tanpa perlu tunggu selesai task sblmnya.
+
+    --> Web server PHP bs pkk Apache atw IIS   |   Node.js pkk runtime sendiri
+        --> Node.js hrs tulis dlu beberapa baris script untuk menjalankan web servernya sehingga deployment (proses penyimpanan aplikasi di web server) berbeda dan lbh sulit krn hrs set up sendiri. Web hosting pd umumnya pkk Apache sehingga tinggal simpan folder aplikasi kita dan lngsng bs dijalankan.
+
+    --> Package manager PHP pkk composer   |   Node.js pkk NPM
+        --> Composer versi 2 baru bs menyaingi kecepatan NPM
+
+- Node.js cocok untuk buat aplikasi:
+    --> Dynamic Single Page Application (SPA) = aplikasi yg satu halaman tp isinya dinamis, bs berubah-ubah tanpa perlu pindah halaman
+    --> Realtime App (chat, multiplayer game)
+    --> API
+    --> Streaming App
+    --> Microservices = Satu aplikasi besar yg dlmnya bnyk aplikasi-aplikasi
+    --> Command Line Tool
+    --> MERN (MongoDB Express.js React.js Node.js), MEAN (... ... Angular ...), MEVN (... ... Vue.js ...), ... = Aplikasi yg menggunakan stack teknologi MongoDB, Express.js, React.js, Node.js
+
+- Konteks untuk Node.js adlh sistem operasi, jd gk bs jalani method-method (API) untuk DOM.
+
+- Perilaku Node.js = JS = Asynchronous & non-blocking, single-thread. Misalkan ilustrasinya di sebuah restoran yg ada satu dapur, satu pelayan (single-thread), dan 2 meja.
+    --> Klo synchronous & blocking:
+        --> Misalkan meja 1 mw pesan, pelayan dtng ke meja satu, catat pesanannya, dan kasi ke dapur. Pelayan tunggu sampe selesai dibuatkan pesanannya, lalu pelayan antar pesanan trsbt ke meja satu.
+        --> Misalkan meja 2 pesan di wkt yg bersamaan dgn meja 1, maka pelayannya hrs selesaikan dlu urusan dgn meja 1 (blocking) baru bs lanjut dgn meja 2 sehingga gk ideal. Solusinya adlh tambah pelayan. Bahkan klo dh terlalu bnyk mejanya sehingga dapur gk sanggup olah, maka hrs tambah dapurnya jg. Mslhnya klo dh bnyk pelayan dan bnyk dapur tp gk ada yg pesan, ini jd buang-buang resource.
+    
+    --> Asynchronous & non-blocking:
+        --> Misalkan meja 1 melakukan pemesanan nasi goreng dan es teh manis, pelayannya dtng ke meja 1, catat pesanan meja 1, kasi ke dapur, dapur buat untuk pesanan meja 1, sedangkan pelayan lngsng balik ke posisinya. Jika meja 2 melakukan pemesanan air hangat di wkt yg sama, maka pelayannya lngsng ke meja 2 dan melakukan proses yg sama dgn meja 1 walaupun di dapur lg buatin pesanan untuk meja 1. Krn pesanan meja 2 lbh cpt selesai, maka pelayannya lngsng ambil dr dapur dan kasi pesanan untuk meja 2 walaupun pesanan meja 1 blm selesai (non-blocking).
+
+- Script JS yg ingin dijlnkan menggunakan Node.js bs dijalani dgn cara:
+    --> node nama-file.js
+    --> node nama-file
+
+- Wkt instal node.js akan sekalian diinstal NPM. Hbs instal, pastikan node.js nya dh dimasukin ke dlm environment (biasanya otomatis) variable supaya bs dijalankan di manapun. Klo dh ada instalasi node.js hbst kita instal lg, maka instalasi yg terbaru akan menimpa yg lama.
+
+- Klo mw instal versi node yg berbeda-beda dlm satu mesin, bs pkk NVM (Node Version Manager).
+
+
+
+
+
+- Di Node.js bs pilih mw ngoding gaya synchronous (biasanya diakhiri dgn kata 'Sync') atw asynchronous:
+    --> Synchronous:
+        // const getUserSync = require('.src/getUserSync'); // Anggap pkk modul Node.js yg synchronous
+
+        const getUserSync = (id) => { // Atw kita buat fungsi synchronous sendiri
+            const nama = id === 1 ? 'Saiful' : 'Sani';
+            
+            // return { id: id, nama: nama };
+            return { id, nama };
+        }
+
+        const user1 = getUserSync(1);
+        console.log(user1);
+
+        const user2 = getUserSync(2);
+        console.log(user2);
+
+        const sapa = 'Yo!';
+        console.log(sapa);
+    
+    --> Outputnya:
+        { id: 1, nama: 'Saiful' }
+        { id: 2, nama: 'Sani' }
+        Yo!
+    
+
+
+    --> Asynchronous (ada callback nya):
+        // const getUser = require('.src/getUser');
+
+        const getUser = (id, cb) => { // Fungsi asynchronous
+            const waktu = id === 1 ? 3000 : 2000; // id = 2 akan duluan dikerjakan krn wkt tunggunya lbh singkat
+            setTimeout(() => {
+                const nama = id === 1 ? 'Saiful' : 'Sani';
+                cb({ id, nama }); // callback adlh fungsi yg dijalankan ketika fungsi trsbt (setTimeout) selesai
+            }, waktu);
+        }
+
+        const user1 = getUser(1, (hasil) => {
+            console.log(hasil);
+        });
+
+        const user2 = getUser(2, (hasil) => {
+            console.log(hasil);
+        });
+
+        const sapa = 'Yo!';
+        console.log(sapa);
+    
+    --> Outputnya:
+        Yo!
+        { id: 2, nama: 'Sani' }
+        { id: 1, nama: 'Saiful' }
+    
+
+
+
+
+- Dlm REPL, jalani `.help` untuk lihat perintah node apa aja yg bs kita jalani:
+    --> `.exit` untuk keluar dr sesi REPL skrng
+    --> `.load nama-file.js` untuk membaca isi file JS dan dipkk pd sesi REPL skrng
+    --> `.save nama-file.js` untuk menyimpan script yg dh kita tulis di sesi REPL skrng
+        --> Walaupun ada baris yg error lalu kita tekan enter di REPL nya, maka akan tetap disimpan krn msh dlm session yg sama. Jd klo ada baris yg salah wkt kita tulis di REPL, jalani `.break` atw `.clear` untuk hapus baris trsbt.
+
+
+
+
+
+- Untuk jalani script JS pkk Node.js, jalani `node nama-file.js` atw `node nama-file` atw klo nama script-nya adlh index.js, maka bs jalani `node .`
+
+- Krn kita jalani JS pkk node, maka gk bs akses objek global `window` lg krn konteksnya skrng bkn browser, melainkan sistem operasi.
+
+- Modul adlh sekumpulan kode yg dpt digunakan kembali dgn antarmuka yg terdefinisi. Mksd dr 'antarmuka yg terdefinisi' adlh ada cara tertentu untuk menggunakannya.
+
+- Node modules adlh fungsionalitas yg simpel atwpun kompleks yg tersimpan di dlm sebuah file JS yg dpt kita gunakan kembali pd aplikasi node.js. Setiap modul memiliki konteksnya masing-masing, gk bs saling tercampur dgn modul lain pd lingkup global. (kecuali kita gunakan exports dan require)
+
+- Node.js Modules (node akan cek sesuai urutannya):
+    --> 1. Core Modules = Modul yg dh dimiliki oleh Node.js di dlm library nya (file system, nework, dll.).
+    --> 2. Local Modules = Modul yg kita buat sendiri, hrs `exports` dan `require('./')` manual. Ditandai ada './' di bagian `require()`.
+    --> 3. Third-party (NPM) Modules = Modul org lain buat yg bs kita pkk.
+
+- Untuk menjalankan script JS yg lain, tuliskan `require('./lokasi-file');` (blh gk tulis '.js'). Tp gk bs lngsng memanggil fungsi atw variabel dr script yg lain krn node menganut sistem modular, satu script dianggap satu 'module'. Jd klo suatu fungsi atw variabel ingin bs dipakai di script yg lain, di dlm script yg membuat fungsi atw variabel trsbt tuliskan `module.exports = namaFungsi;` ATAU `module.exports = namaVariabel;`. Lalu, di script yg ingin menggunakannya tulis `const scriptLain = require('./lokasi-file');`.
+        --> Misalkan ada file satu.js untuk menyimpan sebuah fungsi dan file index.js yg berguna sbg file utama untuk dijlnkan
+            ~$ satu.js
+                function sapa(nama) {
+                    return `Yo! ${nama}`;
+                }
+
+                module.exports = sapa;
+            
+            ~$ index.js
+                const satu = require('./satu');
+
+                console.log(satu('Saiful'));
+
+        
+
+        --> Klo mw dibaca fungsi-fungsi dan variabel-variabel yg ada di dlm modul yg kita buat, jadikan dia objek seperti yg dilakukan oleh modul node lainnya:
+            ~$ satu.js
+                function sapa(nama) {
+                    return `Yo! ${nama}`;
+                }
+
+                let umur = 19;
+
+                const mhs = {
+                    nama: 'Sani',
+                    npm: '19062',
+                    cetakMahasiswa() {
+                        return `Saya ${this.nama} dengan NPM ${this.npm}`;
+                    }
+                };
+
+                class Orang {
+                    constructor() {
+                        console.log('Membuat objek orang!');
+                    }
+                }
+
+                module.exports.sapa = sapa;
+                module.exports.umurOrang = umur;
+                module.exports.mahasiswa = mhs;
+                module.exports.Orang = Orang;
+            
+            ~$ index.js
+                const satu = require('./satu');
+
+                console.log(satu.sapa('Saiful'));
+                console.log(satu.umurOrang);
+                console.log(satu.mahasiswa.cetakMahasiswa());
+                console.log(new satu.Orang());
+        
+
+
+        --> Klo mw lbh ringkas, bs exports nya jadiin satu objek aja:
+            ~$ satu.js
+                function sapa(nama) {
+                    return `Yo! ${nama}`;
+                }
+
+                let umur = 19;
+
+                const mhs = {
+                    nama: 'Sani',
+                    npm: '19062',
+                    cetakMahasiswa() {
+                        return `Saya ${this.nama} dengan NPM ${this.npm}`;
+                    }
+                };
+
+                class Orang {
+                    constructor() {
+                        console.log('Membuat objek orang!');
+                    }
+                }
+
+                module.exports = {
+                    sapa: sapa,
+                    umurOrang: umur,
+                    mahasiswa: mhs,
+                    Orang: Orang
+                }
+            
+            --> Bahkan di ES6, klo nama properti dan value-nya sama, bs ditulis sekali aja:
+                ~ satu.js
+                    ...
+
+                    module.exports = {
+                        sapa,
+                        umurOrang: umur,
+                        mahasiswa: mhs,
+                        Orang
+                    }
+
+
+
+
+
+    ~ NPM
+
+- NPM adlh perusahaan yg didirikan pd thn 2014 dan diakuisisi oleh GitHub (dh diambil alih oleh Microsoft) pd thn 2020. NPM adlh tmpt menyimpan proyek private dan open source, juga package manager untuk Node.js.
+
+- Inisialisasi NPM untuk suatu proyek:
+        - Masuk ke dlm folder proyeknya
+
+        - Jalani `npm init` atw supaya diisi default, jalani `npm init -y`
+
+        - Beri nama proyek, default nya adlh nama folder.
+
+        - Beri versi menggunakan Semantic Version, default-nya 1.0.0
+            --> Digit ketiga adlh patch, digit ini berubah klo ada perubahan kecil, seperti perbaikan bug. Jd klo beda digit ketiga, gk mslh.
+            --> Digit kedua adlh perubahan minor, perubahannya lbh bnyk dr pd patch tp kemungkinan klo angkanya beda, msh bs disamain.
+            --> Digit pertama adlh perubahan major, klo beda angkanya, gk akan sama. 
+
+        - Berikan deskripsi proyek, blh kosongin aja.
+
+        - Berikan entry point, default-nya 'index.js' tp biasanya org buatnya 'app.js'.
+
+        - Sisanya blh kosongin.
+    
+    --> Klo mw semuanya diisi secara default, jalankan `npm init -y`.
+    
+    --> Nti akan dibuatkan file package.json.
+        --> Di dlmnya ada bagian scripts yg bs kita jalani menggunakan `npm` di command prompt. Jd bs kita tambahin untuk jalani proyek kita sehingga menjadi:
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "node ./app.js"
+            }
+        
+        --> Skrng kita bs jalani proyeknya dgn menjalankan `npm start`.
+
+        --> Tp klo bkn perintahnya bkn standar ("start" atw "test"):
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "node ./app.js",
+                "saiful": "ls"
+            }
+
+            `npm run saiful`
+
+- Package yg biasa dipkk adlh `validator`, untuk validasi dan sanitasi string yg kita tulis atwpun user input.
+        `npm i validator` (i = install)
+        `npm uninstall validator`
+        `npm install validator@13.5.2`
+    
+    --> Skrng dlm file package.json dh ditambahin "dependencies", di level folder terluar dr proyek jg dh ditambahin folder node_modules yg berisi folder-folder package Node.js yg dh kita install, dan di level folder terluar dr proyek jg dh ditambahin jg file package-lock.json untuk mengelola lbh detail dr dependencies.
+
+- Package `chalk` untuk mewarnai terminal. Tp krn chalk versi terbaru dh berubah menjadi ESM, maka jalani `npm i chalk@4.1.2`.
+    --> Ada beberapa yg gk support di semua terminal.
+
+- Package `nodemon` (node monitor) untuk jalani perubahan terbaru dr script kita.
+    --> Instal secara global dgn cara jalani `npm install -g nodemon` dan jalani proyeknya `nodemon app.js`.
+
+    --> Instal secara lokal dgn cara jalani `npm install --save-dev nodemon`, ubah bagian "start" di dlm package.json menjadi "nodemon app.js", dan jalani proyeknya `npm start`.
+
+
+
+
+
+    ~ Node.js Web Server
+
+- Aplikasi Contact yg dh kita buat adlh aplikasi berbasis CLI (Command Line Interface) atw ada yg blng Command Line Tool, yaitu aplikasi yg berjln di command line (terminal).
+
+- Setiap ada perubahan di file entry point, jgn lupa jalani ulang atw pkk nodemon.
+
+- Klo cuma beberapa halaman statis, msh okela. Tp klo butuh data untuk dikirimkan ke tiap halaman, perlu terkoneksi ke database, mengelola halaman menggunakan request method yg berbeda (klo halaman statis yg dh kita buat cuma pkk method GET), maka terlalu bnyk yg perlu kita lakukan. Jd kita pkk bantuan modul (framework) yg kita instal pkk npm yg namanya express (ExpressJS).
+
+
+
+
+
+    ~ ExpressJS
+
+- "Fast, unopinionated, minimalist web framework for nodeJS" (~ expressjs.com)
+    --> "Opinionated" = aturan-aturan dlm membuat sesuatu dr framework trsbt dh dikasi tw. Jd tata caranya dh jelas sehingga hanya ada satu cara yg tepat dan strict.
+    --> "Unopinionated":
+        --> Gk ada aturan baku. Aturannya ada tp lbh dibebaskan.
+        --> Fleksibel.
+        --> Kita bs tentuin struktur aplikasinya.
+        --> Bongkar pasang middleware.
+
+- Pkk konsep MVC (Model-View-Controller).
+
+- View rendering engine (templating engine): Pug, Haml.js, EJS, React, blade, ...
+
+- Bs terkoneksi dgn database: Cassandra, Couchbase, CouchDB, LevelDB, MySQL, MongoDB, Neo4j, Oracle, PostgreSQL, Redis, SQL Server, SQLite, Elasticsearch.
+
+- Biar mudah gk perlu bulak balik hidup dan matiin server, pkk nodemon, daftarkan perintah `start` di dlm bagian "scripts" di dlm package.json yg isinya "nodemon ./app.js" ("./app.js" adlh entry point). Lalu, di terminal jalani `npm start`.
+
+- "req" (request) adlh apapun yg dikirimkan ke express dan "res" (response) adlh apapun yg dikembalikan oleh express.
+
+
+
+
+
+    ~ View Engine / Template Engine
+
+- Cara kita untuk mempermudah pengelolaan file statis pd aplikasi.
+
+- Kita bs buat variabel pd template yg nti variabelnya diganti dgn nilai sebenarnya dan ditampilkan dlm bentuk HTML.
+
+- Kita pkk EJS krn:
+    --> Penulisan syntax nya simpel.
+    --> Simple setup.
+    --> Eksekusinya cpt.
+    --> Mudah untk melakukan debugging.
+    --> Pengembangannya aktif.
+    --> Dibuat oleh pembuat yg sama dgn ExpressJS
+
+- Di file entry point, tulis `app.set('view engine', 'ejs');` dan masukkan semua file HTML ke dlm folder "views". Lalu, ubah ekstensi '.html' menjadi '.ejs'.
+
+- Biar enk ngoding pkk EJS, instal extension VSCode yg namanya "EJS language support" dr DigitalBrainstem.
+
+- EJS gk bs ikutin gaya satu template layout utama yg isinya mengambil dr layout yg berbeda untuk tiap halaman. Jd, instal `npm install express-ejs-layouts`.
+
+
+
+
+
+    ~ Middleware
+
+- Software yg menghubungkan software yg lain.
+
+- Awalnya adlh software yg menghubungkan sistem operasi dgn aplikasi.
+
+- Dr request, lalu request nya dikelola terlebih dahulu oleh middleware, baru dikelola oleh aplikasi, dan aplikasi memberikan response.
+
+- Express menganggap apapun setelah user memberikan request dan sblm user menerima response dianggap middleware. Jd method yg kita buat adlh fungsi middleware, yaitu fungsi yg memiliki akses ke objek request (req), objek response (res), dan fungsi berikutnya (next).
+
+- Middleware:
+    --> User-defined (level aplikasi, router, dan error handling)
+    --> Built-in (tinggal use, kyk express.static)
+    --> Third-party (hrs instal dlu baru require dan use, kyk express-js-layouts)
+
+- Express akan menjalankan middleware sesuai urutan dan di route (dianggap middleware jg) krn gk menuliskan `next();`, maka gk akan dijalankan middleware yg selanjutnya.
+
+- Express melindungi file-file statis kita kyk gambar, CSS, script JS, musik, video, dll. yg kita gunakan sbg asset website agar gk bs diakses secara default. Jd hrs kasi tw express bahwa ada folder publik yg isinya blh diakses oleh siapapun pkk middleware "express.static".
+    --> Dlm script entry point, tulis:
+        app.use(express.static('public'));
+
+- Untuk buat session, kita butuh modul express-session, cookie-parser, dan connect-flash.
+
+
+
+
+
+    ~ MongoDB
+- Humongous Database, database yg bs mengelola data begitu besar.
+
+- "MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need". (~ mongodb.com)
+    --> MongoDB adlh sebuah DATABASE BERBASIS DOKUMEN yg memiliki skalabilitas dan fleksibilitas yg kita inginkan dan jg memiliki fitur query dan indexing yg kita butuhkan.
+
+    --> Database berbasis dokumen adlh salah satu tipe dr NoSQL (Not Only SQL) Database.
+        --> Gk ada skema (skemanya fleksibel)
+        --> Denormalization (embedded document, dokumen di dlm dokumen)
+        --> Non-relational Database (bs aja gk ada relasi/hubungan antar datanya, maka gk ada primary key, foreign key, dan kardinalitas)
+        --> Bs menyimpan unstructured, semi-structured, dan structured data.
+    
+- Tipe NoSQL Database:
+    --> Key-value store (Redis)
+    --> Document-based (MongoDB, CouchDB)
+    --> Column-oriented Database (HBase, Cassandra)
+    --> Graph Database (Neo4j)
+
+- SQL vs NoSQL
+    --> Database   | Database
+    --> Table   |   Collection = isi database
+    --> Kolom dan baris   |   BSON (Binary JSON, JavaScript Oject Notation) = struktur isinya
+    --> Record    |   Document = sebaris data
+    --> Column   |   Field
+
+- Bs pkk dgn cara instal lokal atw online (cloud, pkk MongoDB Atlas, hrs daftar)
+
+- Instal lokal di Windows:
+    --> Akan diinstal MongoDB Compass sbg GUI pengganti shell `mongo`.
+    --> Dr pd akses shell `mongo` dgn cara buka CMD, pergi ke direktori tmpt kita simpan instalasi MongoDB, masuk ke dlm folder bin, baru jalankan mongo.exe, mending kita simpan ke dlm environment variables agar bs dibuka dr manapun.
+
+- Membuat database baru:
+        `use dbbaru`
+        `show databases`
+        `show dbs`
+
+    --> Krn blm ada nama database dgn naam "dbbaru", maka akan dibuatkan dan lngsng digunakan (aktif)
+
+- Membuat collection baru:
+    `db.createCollection('mahasiswa)`
+    `show collections`
+
+- Membuat objek dokumen baru:
+    `db.mahasiswa.insertOne({nama: "Saiful", npm: "19062"})`
+    `db.mahasiswa.find()`
+    `db.mahasiswa.insertMany([{nama: "Saiful", npm: "19062"}, {nama: "Sani", npm: "19022", noHp: ""085277770088}])`
+
+- Klo pkk MongoDB Atlas, daftar dlu, baru buat cluster (pilih server region), lalu buat database user, baru connect.
+    --> Di terminal, gk cuma jalani `mongo`, tp ada parameter connection string yg diberikan oleh MongoDB Atlas dan masukin password user yg didaftar td.
+    --> Bs jg koneksi lewat MongoDB Compass. Tp ingat, klo di Compass, key dr field nya hrs pkk kutip dua, kyk JSON yg sbnrnya.
+
+
+
+?) Apa hrs instal MongoDB dlu baru instal di proyek supaya bs pkk MongoDB di NodeJS?
+    --> Hrs instal MongoDB nya krn akan ditembak ke URI yg sama sehingga disimpan di dlm direktori penyimpanan MongoDB yg sama walaupun gk kita jalani koneksinya di MongoDB Compass. Tp klo kita lakuin apapun lewat Node.js, bs kita liat di MongoDB Compass. Mong
+
+- Instal `npm i mongodb`
+
+- Instal `npm i mongoose`
+    --> Object Document Modeling (klo ORM untuk database relational) untuk node.js.
+    --> Berbasis skema yg kita anggap sbg model.
+    --> Node.js tidak berinteraksi lngsng dgn MongoDB (gk ada `require('mongodb');`), melainkan menggunakan Monggose.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

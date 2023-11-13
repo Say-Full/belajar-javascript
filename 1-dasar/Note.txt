@@ -1,0 +1,1748 @@
+                                JavaScript Dasar
+
+
+
+
+
+- Bhs pemrograman yg pkk compiler, dr source code, di-compile pkk compiler menjadi file executable. File executable itu yg dibagikan ke perangkat lain. Perangkat yg menjalankan file executable itu tdk perlu memiliki compiler dan tdk bs lihat source code nya.
+
+- Keuntungannya siap untuk dijalankan, lbh cpt, dan source code gk terlihat.
+
+- Kekurangannya tdk lintas platform atw sistem operasi dan gk fleksibel ketika perlu memodifikasi programnya sehingga perlu compile ulang yg menjadi langkah tambahan. Gk lintas platform tu bs aja klo beda sistem operasi, atw bahkan sama sistem operasi tp beda spesifikasi CPU, programnya gk jln.
+
+- C, C++, Objective-C
+
+
+
+- Bhs pemrograman yg pkk interpreter, source code yg ditulis itu yg dibagikan ke perangkat lain dan perangkat trsbt mempunyai interpreter yg menerjemahkan baris per baris dr kode programnya secara real-time, seperti di web browser.
+
+- Keuntungannya lintas platform asalkan ada interpreternya, fleksibel krn perlu compile ulang, dan mudah untuk diuji.
+
+- Kekurangannya butuh interpreter, lbh lambat krn tiap buka program hrs diinterpretasikan oleh interpreter, dan source code mudah diakses.
+
+- JavaScript, PHP
+
+- Bhs pemrograman hybrid (intermediate language), dr source code yg dibuat, di-compile menghasilkan file intermediate language atw byte code (blm executable tp dh cukup teroptimasi untuk bhs mesin dan cross-platform), byte code itu yg diberikan ke perangkat lain, dan perangkat lain itu menjalankan byte code menggunakan Just-In-Time (JIT) Compilation (sambil compile, sekaligus dijalankan programnya).
+
+- Java, VB.Net, Python
+
+
+
+- Bahasa scripting adlh bahasa yg tertanam di dlm program yg lbh besar sehingga yg bs menggunakan bhs scripting hanya program trsbt, seperti dlm aplikasi Adobe Flash ada bahasa ActionScript, dlm MS Office ada bhs VBScript, dan Web Browser (Internet Explorer, Mozilla, Chrome, Opera, dll.) yg di dlmnya ada bhs JavaScript.
+
+
+
+
+
+- Ctrl + Shift + J = buka Console di Google
+
+- Ctrl + K = Clear console
+
+
+
+
+
+
+- Tipe data = number, string, boolean, object, function, undefined.
+
+- Gk punya integer, sbnrnya semua number adlh floating point 64-bit dgn format IEEE 754 values dgn tingkat akurasi 15 digit. Kita ketik angka 9 sebnyk 16 kali akan dianggap cukup untuk dibulatkan menjadi 1 dgn 0 sbnyk 16 kali.
+
+- 1 bit digunakan untuk menyimpan tanda negatif, 11 bit untuk menyimpan eksponen, dan 52 bit digunakan untuk angka sebenarnya (fraction) termasuk untuk menyimpan titik untuk pecahan.
+
+- Koma untuk floating point pkk titik. Bs simpan 17 digit di blkng pecahan. Hati-hati ketika menjumlahkan blngan pecahan, mengawali angka dgn angka 0, dan 0x.. krn hasilnya gk sesuai dgn harapan kita. Krn klo diawali dgn angka 0 akan dianggap bilangan oktal (basis 8) dan klo diawali dgn 0x akan dianggal hexadesimal (basis 16, 0 - F).
+    0.2 + 0.1 = 0.30000000000000004
+    022 = 18
+    0xFF = 255
+
+- Ada jg blngan eksponen:
+    123e5 = 12300000
+    123e-5 = 0.00123
+
+- Angka spesial = Infinity, -Infinity, dan NaN (Not A Number).
+    2 / 0 = Infinity
+    -2 / 0 = -Infinity
+    0 / 0 = NaN
+    100 / "tes" = NaN
+    100 / "10" = 10
+
+- Operator: aritmatika, penugasan, perbandingan (==, !=, ===, ...), logika(&&, ||, !), string concat (+), kondisional ternary, dan typeof.
+
+- Escape character:
+    \\ = \
+    \0 = NULL
+    \b = backspace
+    \n = newline
+    \uxxxx = unicode --> \u00A9 = logo copyright
+
+- Boolean
+    Boolean(-1) = true
+    Boolean(0) = false
+
+    --> truthy = true, non-zero number, "string", objects, arrays, functions
+    --> falsy = false, 0, "", undefined, null, nan
+
+- Deklarasi variabel:
+    var
+    let
+    const
+
+- Naming convention variabel:
+    camelCase
+    Blh ada angka tp gk blh diawali dgn angka
+    Blh diawali dgn dolar
+
+    var namaMahasiswa = "Saiful",
+        umur = 19,
+        lulus = true;
+
+- Tujuan tag script di bagian paling bawah body HTML adalah supaya dimuat (load) dlu HTML-nya baru JS.
+
+- Popup box / dialog box (elemen dr browser) = window kecil di browser yg dpt dimunculkan sbg alat interaksi agar user dpt berdialog dgn halaman web:
+    alert
+    prompt --> bs menerima input
+    confirm --> mengembalikan nilai true klo ditekan tombol OK dan mengembalikan nilai false jika ditekan tombol cancel
+
+- Tabel penelusuran = trace table = dry-run test = untuk mengetahui perubahan variabel dlm pengulangan.
+
+- parseInt(prompt('Masukkan angka')); --> method parsing ke int
+
+- Bs memanggil fungsi dan variabel dr dlm script yg berbeda asalkan dipanggil dr dlm file HTML yg sama krn sama-sama di dlm objek global `window`.
+    --> Di dlm index.html memanggil file satu.js dan dua.js. Lalu, dlm file satu.js membuat fungsi deklarasi yg bernama `coba()` dan di dlm file dua.js bs memanggil fungsi `coba()` trsbt. Begitu jg untuk variabel.
+
+
+
+
+
+    ~ Function
+
+- Diawali dgn keyword `function`.
+
+- Pkk konsep hoisting (function disimpan ke dlm memori terlebih dahulu baru program dijalankan) sehingga deklarasi fungsi blh dmn aja, meskipun setelah pemanggilan fungsinya.
+
+- Blh kasi nama (identifier) atw tidak.
+
+- Parameter = variabel dlm kurung ketika mendefinisikan fungsi yg berguna untuk menampung nilai yg dikirim.
+
+- Argumen = Nilai yg dikirim ketika memanggil fungsi.
+
+- Blh ada parameter, blh ada satu atw lbh parameter.
+
+- Jika ada 2 parameter tp argumen yg diberikan lbh dr 2, maka yg lbh itu diabaikan. Klo kurang, maka akan diberikan nilai `undefined`.
+
+- Blh ada return atw tdk.
+
+- Ada fungsi yg dibuat menggunakan deklarasi (hrs ada nama) dan ada yg menggunakan ekspresi (blh gk tulis nama, yaitu anonymous function atw callback function).
+    
+    --> fungsi deklarasi:
+
+        function jumlahDuaBilangan(a, b) { return a + b; }
+    
+    --> fungsi ekspresi:
+
+        var jumlahDuaBilangan = function(a, b) { return a + b; }
+
+
+
+- arguments = array yg berisi nilai yg dikirimkan saat fungsi dipanggil (pseudo variabel).
+    
+    --> Contoh 1:
+        function tes() { return arguments; }
+        console.log(tes(5, 10, 7, 'yo', false));
+
+    --> Contoh 2:
+        function total() {
+            var hasil = 0;
+
+            for( var i = 0; i < arguments.length; i++ ) {
+                hasil += arguments[i];
+            }
+
+            return hasil;
+        }
+
+
+- Refactoring = mengubah kode program agar lbh baik dan efisien tanpa mengubah fungsionalitasnya:
+    --> Readibility (mudah dibaca oleh org lain)
+    --> DRY (Don't Repeat Yourself)
+    --> testability (mudah saat diuji)
+    --> performance (kode dpt meningkatkan performa program dr segi looping yg baik, tipe data yg tepat, pengalokasian memori yg efektif)
+    --> Maintainability (mudah dikelola dan dikembangkan)
+
+- Rekursif = fungsi yg memanggil dirinya sendiri.
+    --> Contoh 1:
+        function tampilAngka(n) {
+            if( n === 0 ) return; // Base Case
+
+            console.log(n);
+            return tampilAngka(n-1);
+        }
+
+    --> Contoh 2:
+        function faktorial(n) {
+            if( n === 0 ) return 1;
+
+            return n * faktorial(n-1);
+        }
+
+
+    ~ Array
+
+- Array = tipe data untuk mendeskripsikan kumpulan elemen (nilai atw variabel) yg tiap elemennya memiliki indeks.
+
+- Di JS, array dianggap object. Isinya blh berbeda tipe datanya.
+    --> var myFunc = function() { alert('Yo'); }
+
+    --> var arr1 = [];
+
+    --> arr1 = ['Senin', 'Selasa', 1, true, 'Kamis', myFunc, [1, 3, 5]];
+    
+    --> console.log(arr1.join()); // menggabungkan seluruh isi array dan mengubahnya menjadi string yg defaultnya dipisahkan dgn koma tanpa ada spasi
+        --> Senin,Selasa,1,true,Kamis,function() { alert('Yo'); },1,3,5
+    
+    --> console.log(arr1.join(' - '));
+        --> Senin - Selasa - 1 - true - Kamis - function() { alert('Yo'); } - 1,3,5
+
+    --> arr1[8] = 3.14; // arr1[7] berisi undefined
+        --> ['Senin', 'Selasa', 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14]
+
+    --> arr1[1] = undefined // Menghapus isi array
+        --> ['Senin', undefined, 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14]
+
+    --> arr1.length // 9
+
+    --> arr1.push('test1', 'test2'); // Menambahkan di paling akhir
+        --> ['Senin', undefined, 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14, 'test1', 'test2']
+
+    --> arr1.pop(); // Menghilangkan elemen terakhir pada array, bkn merubahnya menjadi undefined
+        --> ['Senin', undefined, 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14, 'test1']
+
+    --> arr1.unshift('test3'); // Menambahkan elemen di paling awal
+        --> ['test3', 'Senin', undefined, 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14, 'test1']
+
+    --> arr1.shift(); // Menghilangkan elemen pertama pada array, bkn merubahnya menjadi undefined
+        --> ['Senin', undefined, 1, true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14, 'test1']
+
+    --> arr1.splice(2, 0, 'Yo1', 'Yo2'); // splice(indexAwal, berapaBanyakDihapus, elemenBaru1, elemenBaru2, ...)
+        --> ['Senin', undefined, 1, 'Yo1', 'Yo2', true, 'Kamis', myFunc, [1, 3, 5], undefined, 3.14, 'test1']
+
+    --> arr1.splice(1, 10, 'Kamis');
+        --> ['Senin', 'Kamis', 'test1']
+    
+    --> arr2 = arr1.slice(1, 3); // slice(indeksAwal, indeksAwkhir - 1)
+        --> ['Kamis']
+
+
+    
+
+
+    --> arr1.forEach(function(e) {
+        console.log(e);
+    });
+
+    --> var cetak = function(elemen, indeks) {
+        console.log(elemen, indeks);
+    };
+
+    arr1.forEach(cetak);
+
+
+
+
+
+    --> Map mengembalikan array, jd bs melakukan operasi terhadap elemen dalam array dan menyimpannya di array yg baru.
+
+    var angka = [1, 3, 5, 10, 20];
+    var cetak = angka.map(function(e) {
+        return e * 2;
+    });
+
+
+
+
+
+    --> angka.sort();
+
+    console.log(angka.join(' - '));
+        --> 1 - 10 - 20 - 3 - 5
+
+
+
+    --> angka.sort(function (a, b) {
+        return a - b;
+    });
+
+    console.log(angka.join(' - '));
+        --> 1 - 3 - 5 - 10 - 20
+
+
+
+
+
+    --> var cetak = angka.filter(function(x) {
+        return x == 20;
+    });
+
+    console.log(cetak);
+        --> [20]
+
+    
+
+    --> var cetak = angka.filter(function(x) {
+        return x == 19;
+    });
+
+    console.log(cetak);
+        --> []
+
+
+
+    --> var cetak = angka.filter(function(x) {
+            return x < 10;
+        });
+
+        console.log(cetak.join(' - '));
+            --> 1 - 3 - 5
+
+
+
+
+
+    --> var cetak = angka.find(function(x) {
+        return x < 10;
+    });
+
+    console.log(cetak); // 1
+    console.log(cetak.join(' - ')); // error
+
+
+
+
+
+    ~ Object
+
+- Cara buat objek:
+    --> Object literal
+
+        var mahasiswa = {
+            nama : 'Saiful', // properti
+            lulus : true,
+            IPSemester : [3.4, 4, 3.7, 3.5, 3.5, 3.81, 3.82],
+            alamat : {
+                provinsi : 'Aceh',
+                kota : 'Banda Aceh'
+            },
+            IPKumulatif : function() { // method
+                var ips = this.IPSemester;
+                var total;
+
+                for( var i = 0; i < ips.length; i++ ) {
+                    total += ips[i];
+                }
+
+                return total / ips.length;
+            }
+        }
+
+        mahasiswa['alamat']['provinsi']; // Aceh
+        mahasiswa.alamat['provinsi']; // Aceh
+        mahasiswa.alamat.provinsi; // Aceh
+
+
+
+
+
+    --> Function declaration
+
+        function objectMahasiswa(nama, npm) {
+            var mhs = {};
+            mhs.nama = nama;
+            mhs.npm = npm;
+
+            return mhs;
+        }
+
+        var mahasiswa1 = objectMahasiswa('Saiful', 19062);
+
+
+
+
+
+    --> Constructor function (keyword new) // Fungsi khusus untuk buat objek
+
+        function Mahasiswa(nama, npm) { // Naming convention nya adlh mengikuti nama class
+            this.nama = nama;
+            this.npm = npm;
+        }
+
+        var mahasiswa2 = new Mahasiswa('Sani', 19064); // Klo gk pkk keyword new, nti dikira ingin buat objek pkk function declaration
+
+
+
+
+    --> Object.create()
+
+
+
+
+
+- `this` adlh keyword spesial yg otomatis didefinisikan pd setiap function atw objek. Krn di JS semuanya adlh objek, di scope global, defaultnya ketika kita akses `this` itu sama aja mengakses objek `window` (objek global). Jd `this` = `window`, kecuali dikasi konteks dlm suatu scope objek.
+    --> Cetak `this` pada saat pembuatan objek dgn cara function declaration, maka yg dicetak adlh objek window.
+
+    --> Cetak `this` pada saat pembuatan objek dgn cara object literal, maka yg dicetak adlh objek yg bersangkutan.
+        --> Contoh 1:
+            var obj = {};
+
+            obj.tes = function() {
+                console.log(this);
+            }
+
+            obj.tes();
+
+                --> {halo: f}
+                    halo: f()
+                    __proto__: Object
+
+
+
+        --> Contoh 2:
+        
+            var obj = {a = 9, b = 'Yo'};
+
+            obj.tes = function() {
+                console.log(this);
+            }
+
+            obj.tes();
+
+                --> {a: 9, b: "Yo", tes: f}
+                    a: 9
+                    halo: f()
+                    b: "Yo"
+                    __proto__: Object
+
+
+
+
+
+    --> Cetak `this` pada saat pembuatan objek dgn cara constructor, maka yg dicetak adlh objek yg baru dibuat.
+
+        function Tes() {
+            console.log(this);
+        }
+
+        new Tes();
+
+            --> Tes {}
+                __proto__: Object
+
+
+
+
+
+
+
+
+
+
+        ===========================================================================================================================
+                ******************************************************************************************************
+                                ===============================================================
+
+
+
+
+
+
+
+
+
+
+                                JavaScript Document Object Model (DOM)
+
+
+
+
+
+- DOM = antarmuka pemrogramana untuk HTML yg merepresentasikan halaman web sehingga program dpt mengubah dan memanipulasi strukturnya.
+    = Representasi elemen HTML pd dokumen menjadi sebuah object, yaitu DOM Tree (pohon hirarki DOM).
+        --> Dokumen (web) yg kita buat pkk HTML yg berisi tag-tag HTML akan dibaca sbg object oleh browser.
+
+- Dlm DOM Tree, tag HTML dianggap element, `href` dianggap atribut, string disebut teks.
+
+- Klo satu disebut node. Lbh dr satu node, disebut nodeList. Klo kumpulan node yg bertipe elemen HTML saja disebut HTML Collection (bersifat live).
+
+- Children adlh child node yg bertipe elemen HTML.
+
+- Tag script untuk JS ditaruh di paling bawah dlm tag body krn wkt bermain dgn DOM, dokumen HTML nya hrs di-load dlu ke memori baru DOM nya bs pkk dokumen HTML nya. Tp klo jQuery blh taruh di head.
+
+
+
+- DOM Selection Method:
+    --> `getElementById()` = elemet
+    --> `getElementsByTagName()` = HTML Collection walaupun yg didpt cuma satu hasil. Untuk ubah satu hasil yg didpt menjadi elemen, taruh indeks 0.
+    --> `getElementsByClassName()` = HTML Collection
+    --> `querySelector()` = element
+    --> `querySelectorAll()` = nodeList
+
+- Method `getElementById()` dan `getElementsByTagName()` memiliki performa lbh cpt dr pd yg 3 di bwhnya.
+
+
+
+- Manipulasi Element:
+    --> element.innerHTML
+    --> element.style.<propertiCSS>
+    --> element.setAttribute(), elemet.getAttribute(), element.removeAttribute()
+    --> element.classList 
+        --> element.classList.add()
+        --> element.classList.remove()
+        --> element.classList.toggle() // Mengembalikan true klo berhasil menambahkan class dan bernilai false jika menghapus class
+        --> element.classList.item()
+        --> element.classList.contains()
+        --> element.classList.replace() // Hapus klo elemen trsbt punya class-nya
+    --> ...
+
+
+
+- Manipulasi Node:
+    --> document.createElement()
+    --> document.createTextNode()
+    --> node.appendChild()
+    --> node.insertBefore()
+    --> parentNode.removeChild()
+    --> parentNode.replaceChild()
+    --> ...
+
+- Buat dlu elemennya (tag), baru buat isi teksnya, pindahkan teksnya ke dlm elemennya, terakhir simpan node baru ke tmpt yg diinginkan.
+
+- Ada jg method yg baru tp msh dlm masa percobaan sehingga blm semua browser support:
+    --> parentNode.append()
+    --> parentNode.prepend()
+    --> childNode.before()
+    --> childNode.after()
+    --> childNode.remove()
+    --> childNode.replaceWith()
+
+
+
+
+
+    ~ Event
+
+- Event (mendengarkan) merepresentasikan sebuah kejadian yg terjadi di dlm DOM. Bs dilakukan oleh user (klik mouse, menggerakkan mouse, mengetik) atw oleh API (animasi selesai dijalankan, halaman selesai di-load):
+    --> Event Handler (on<event>):
+        --> Inline HTML attribute
+        --> Element method
+
+    --> addEventListener()
+
+- Event handler adlh cara lama dan klo mw berikan lbh dr satu perubahan, dia gk bs menambah perubahan baru melainkan menimpa yg dh ada, misalnya event onclick.
+
+- Kita bs ambil nilai yg diberi dr tag input dgn menggunakan properti `.value`.
+
+- Untuk event listener, `change` pada slider (`<input type="range">`) akan "didengarkan" nilainya ketika kita lepas klik nya. Klo mw sambil digeser sambil "didengarkan" inputnya gunakan `input`.
+
+- Document adlh halaman web, yaitu bagian putih di browser. Sedangkan window termasuk tab, tombol close, dll.
+
+- Bagian document paling atas adlh sama dgn elemen pertama yg kita buat dan begitu jg paling bawah. Biar dia full satu bagian putih, tambahkan CSS:
+    html, body { height: 100%; }
+
+
+
+
+
+    ~ DOM Traversal
+
+- Seleksi salah satu elemen pkk teknik DOM Selection. Lalu, seleksi elemen yg lain, relatif trhdp elemen yg dh kita seleksi:
+    --> `.parentNode` (mengembalikan node, blm pasti elemen HTML)
+    --> `.parentElement` (mengembalikan elemen HTML)
+    --> `.nextSibling`
+    --> `.nextElementSibling`
+    --> `.previousSibling`
+    --> `.previousElementSibling`
+
+
+
+
+
+    ~ Prevent Default dan Event Bubbling
+
+- `event.preventDefault();` adlh method dr objek event dr method addEventListener yg tujuannya untuk menghentikan aksi default dr sebuah elemen, seperti klo tag a kan akan diarahkan ke link `href` yg dituju. Jika `href` nya kosong, akan diarahkan ke halaman yg sama. Klo kita pkk .preventDefault, maka gk diarahkan ke mana-mana, melainkan menjalankan JavaScript yg dh kita buat aja.
+    --> Klo mw hilangin underline dr tag a, tambahkan class `text-decoration: none;`
+
+- Ketika kita berikan event ke suatu elemen, maka akan berlaku ke elemen-elemen pembungkusnya, semakin ke atas seperti gelembung. Ketika kita jg kasi event di elemen pembungkusnya, maka akan dijalankan event untuk elemen pembungkusnya terlebih dahulu.
+
+- Pkk method `event.stopPropagation();` untuk menghentikan event yg akan dijalankan selanjuntya.
+
+
+
+
+
+
+
+
+
+
+        ===========================================================================================================================
+                ******************************************************************************************************
+                                ===============================================================
+
+
+
+
+
+
+
+
+
+
+                                JavaScript Lanjutan
+
+
+
+
+
+    ~ Prototype
+
+- Pembuatan objek menggunakan metode object literal memakan bnyk resource krn melakukan sesuatu yg sama berulang-ulang, yaitu mendeklarasikan properti dan method. Jd objeknya akan dibuat berulang-ulang walaupun dgn isi yg berbeda sehingga tdk efektif untuk objek yg bnyk.
+
+- Klo buat objek pkk function declaration, kita tdk perlu buat objek duplikat seperti object literal, tp method-method yg kita buat akan disimpan untuk masing-masing objek (di dlm memori) walaupun tdk digunakan.
+- Supaya lbh efektif, buat objek terpisah yg berisi method-method yg dibutuhkan sehingga method-method nya hanya akan disimpan sekali di dlm memori dan ketika objeknya menggunakan method trsbt, ia akan mengacu objek yg dh disimpan di dlm memori, method nya gk dibuat berulang kali.
+- Tp skrng kita hrs kelola 2 objek. Klo ada penambahan method baru, hrs tambahin manual di objek tmpt kita simpan method-method dan daftarkan method nya ke dlm objek yg sbnrnya. Gtu jgk klo ada method yg dihapus. Supaya otomatis, gunakan Object.create()
+
+- `Object.create()` Membuat objek baru dgn parameternya mengacu kpd parent object (inheritance). Jd kita buat objek baru dgn membawa properti dan method dr objek lain.
+- Tp sbnrnya yg kita butuhkan hanya objek utamanya aja, sedangkan objek pendukung (objek tmpt kita simpan method-method) adlh objek baru yg kita buat sendiri. Jd kita kerjanya dua kali. Makanya kita gunakan prototype.
+- Konsepnya mirip dgn konsep class di bhs pemrograman object-oriented (Java, PHP, dll.) yg memiliki inheritance (pewarisan). Di JS, konsep ini dinamakan prototypal inheritance (pewarisan menggunakan prototipe).
+- JS gk pkk konsep class krn wkt pembuatannya sangat singkat, cuma 10 hari. Tp skrng JS dh bs pkk class.
+
+
+
+
+
+    ~ Execution Context
+
+- Creation Phase (fase pembentukan):
+
+    Klo kita buat `console.log(nama);` maka akan ditampilkan pesan kesalahan 'reference error'.
+
+    Tp klo kita buat 
+    `console.log(nama);
+    var nama = 'Saiful';`
+    maka akan dicetak isi variabel nama itu undefined
+
+    Hal ini disebabkan oleh creation phase di Global Execution Context krn kita buatnya lngsng di file JS nya, bkn di dlm fungsi dlm file JS. Pd fase ini, JS akan cek variabel dan function (keyword var dan function) dlm script tanpa mempedulikan perintah seperti `console.log()`. Klo ada variabel YG DIBUAT PKK KEYWORD var, maka dibuatkan dlu variabelnya di dlm memori dan diisi dgn nilai undefined. Klo ada function, akan diisi dgn kode fungsi itu sendiri, tp blm dijalani function nya. Klo mw jalani function, bs cetak `console.log(sayHello());`. Tp klo mw liat isi fungsinya, cetak `console.log(sayHello);`
+
+
+- Hoisting = seperti menggerek bendera. Klo ada `var` dan `function`, maka akan dinaikkan ke atas (diutamakan) terlebih dahulu.
+
+- Didefinisikan objek `window` sbg objek global dan mendefinisikan `this` sbg window.
+
+- Execution Phase = mengeksekusi programnya, baris per baris, dr atas ke bawah, seperti menjalankan `console.log()` dan seterusnya.
+
+- Klo ketemu function, maka akan dilakukan Local Execution Context yg tahapnya sama, yaitu creation, hoisting, dan execution. Tp klo di Local Execution Context, kita bs akses `window` dan `arguments` yg mana `arguments` berisi apapun yg kita isi ke dlm parameter fungsinya.
+
+
+
+- Klo ada script:
+        var nama = 'Saiful';
+
+        function sayHello(nama) {
+            var sapa = 'Hai ';
+
+            return sapa + nama;
+        }
+
+        console.log(sayHello(nama));
+
+    Maka, JS akan menjalankan Global Execution Context terlebih dahulu, yaitu:
+        1. Mendaftarkan ke dlm memori variabel `nama` yg diisi dgn undefined dan fungsi `sayHello` yg diisi 'function sayHello(nama) { ... }'.
+
+        2. Dijalankan `var nama = 'Saiful';` yg menyebabkan variabel `nama` berisi 'Saiful'.
+
+        3. Abaikan `function sayHello() { ... }` dan jalankan `console.log(sayHello(nama));` yg menyebabkan JS menjalankan fugnsi sayHello(nama) dan masuk ke dlm Local Execution Context dr fungsi trsbt:
+            3.1. Mendaftarkan variabel `sapa` yg diisi dgn undefined.
+
+            3.2. Dijalankan `var sapa = 'Hai ';` yg menyebabkan variabel `sapa` berisi 'Hai '.
+
+            3.3. Mengembalikan `sapa + nama`, yaitu 'Hai Saiful'.
+        
+        4. Tampilkan 'Hai Saiful' di layar.
+
+        5. Selesai.
+
+
+
+- Klo ada script:
+        var nama = 'Saiful';
+
+        function sayHello(nama) {
+            var sapa = 'Hai ';
+
+            return sapa + nama;
+        }
+
+        console.log(sayHello('Sani'));
+    
+    Maka yg ditampilkan 'Hai Sani' krn disebabkan oleh variable scope. Nilai parameter `nama` di fungsi sayHello(nama) itu diambil dr argumen yg dikirimkan dr `console.log(sayHello('Sani'));`
+
+
+
+- Klo ada script:
+        var nama = 'Saiful';
+
+        function sayHello() {
+            var sapa = 'Hai ';
+
+            return sapa + nama;
+        }
+
+        console.log(sayHello('Sani'));
+    
+    Maka yg ditampilkan 'Hai Saiful' krn argumen 'Sani' gk ada yg tangkap tp tetap masuk ke dlm objek `arguments`. Variabel `nama` di bagian `return sapa + nama;` akan cek di lokal dlu (isi dlm fungsinya) ada gk isi untuk variabel `nama`. Klo gk ada, lanjut dicek di dlm parameter fungsinya.
+    Klo gk ada, akan dicek ke variabel global, yaitu `var nama = 'Saiful';`. Klo di global jg gk ada, maka akan ditampilkan pesan kesalahan 'reference error'.
+
+    
+
+- Klo ada script Execution Stack:
+        
+        function a() {
+            console.log('Ini A');
+
+            function b() {
+                console.log('Ini B');
+
+                function c() {
+                    console.log('Ini C');
+                }
+
+                c();
+            }
+
+            b();
+        }
+
+        a();
+    
+    Maka:
+    1. Hoisting terlebih dahulu, yaitu `a` yg berisi 'function a() { ... }'.
+
+    2. Jalankan `a();` :
+        2.1. Hoisting terlebih dahulu, yaitu `b` yg berisi 'function b() { ... }'.
+
+        2.2. Jalankan `console.log('Ini A');`, yaitu mencetak 'Ini A' di layar.
+
+        2.3. Jalankan `b();` :
+            2.3.1. Hoisting terlebih dahulu, yaitu `c` yg berisi 'function c() { ... }'.
+
+            2.3.2. Jalankan `console.log('Ini B');`, yaitu mencetak 'Ini B' di layar.
+
+            2.3.3. Jalankan `c();` :
+                2.3.3.1. Jalankan `console.log('Ini C');`, yaitu mencetak 'Ini C' di layar.
+
+                2.3.3.2. Skrng dh tertumpuk execution context untuk fungsi a, b, dan c di Execution Stack.
+            
+            2.3.4. Hapus fungsi c.
+        
+        2.4. Hapus fungsi b.
+    
+    3. Hapus fungsi a.
+
+
+
+
+
+    ~ Closure
+
+- "Kombinasi antara function dan Lexical Scope di dalam fungsi tersebut." ~ Mozilla Developer Network (MDN) [developer.mozilla.org]
+
+- "Fungsi ketika memiliki akses ke parent scope-nya, meskipun parent scope-nya sudah selesai dieksekusi." ~ w3school
+
+- "Fungsi yang dikembalikan oleh fungsi yg lain, yang memiliki akses ke lingkungan saat ia diciptakan." (function yg me-return function) ~ Code Fellow
+
+- "Fungsi yang sebelumnya sudah memiliki data hasil dari fungsi yang lain." ~ Techsith
+
+
+
+- Kita pkk closure untuk:
+    --> "Untuk membuat Function Factories." ~ MDN
+    --> "Untuk membuat Private Method." ~ MDN
+
+
+
+- Klo ada script:
+        function init() {
+            let nama = 'Saiful'; // Local variable
+
+            function tampilNama() { // Inner function (closure) krn fungsi ini membutuhkan variabel di parent scope-nya
+                console.log(nama); // Akses ke parent variable
+            }
+
+            tampilNama(); // Menyetak 'Saiful' di layar
+
+            console.dir(tampilNama); // Cek apakah fungsi ini closure atw bkn di dlm objek `tampilNama()` di dlm `[[Scopes]]` di indeks 0
+        }
+
+        init();
+
+
+
+- Klo ada script:
+        function init() {
+            let nama = 'Saiful';
+
+            function tampilNama() {
+                console.log(nama);
+            }
+
+            return tampilNama;
+        }
+
+        init();
+    
+    Gk akan dicetak apapun, kecuali ubah `init();` menjadi
+        let panggilNama = init(); // Function Factory
+        panggilNama();
+
+
+
+- Klo ada script:
+        function init() {
+            function tampilNama(nama) {
+                console.log(nama);
+            }
+
+            return tampilNama;
+        }
+
+        let panggilNama = init();
+        panggilNama('Sani'); // Menyetak 'Sani'
+
+    Supaya lbh ringkas, jadiin aja anonymous function :
+        function init() {
+            return function(nama) {
+                console.log(nama);
+            }
+        }
+
+        let panggilNama = init();
+        panggilNama('Sani');
+
+
+
+- Script Function Factories:
+        function ucapkanSalam(waktu) {
+            return function(nama) {
+                console.log(`Halo ${nama}, selamat ${waktu} !!!`);
+            }
+        }
+
+        let selamatPagi = ucapkanSalam('pagi');
+        let selamatSiang = ucapkanSalam('siang');
+        let selamatMalam = ucapkanSalam('malam');
+
+        selamatPagi('Saiful'); // 'Halo Saiful, selamat pagi !!!'
+
+        console.dir(selamatSiang); // Inner function yg anonymous function itu sudah jln setengahnya, dh dianggap closure dan untuk Lexical Scope-nya dh menggunakan data 'siang' untuk `${waktu}`. Tinggal tunggu data untuk `${nama}`.
+
+        console.dir(selamatMalam('Sani')); // 'Hai Sani, selamat malam !!!'
+
+
+
+- Script Private Method:
+    --> Contoh 1:
+
+        let counter = 0;
+
+        let add = function() {
+            return ++counter;
+        }
+
+        console.log(add()); // 1
+        console.log(add()); // 2
+
+
+
+    --> Contoh 2 :
+
+        let counter = 0;
+
+        let add = function() {
+            return ++counter;
+        }
+
+        counter = 10;
+        console.log(add()); // 11
+        console.log(add()); // 12
+
+
+
+    --> Contoh 3 :
+    
+        let add = function() {
+            let counter = 0;
+            return ++counter;
+        }
+
+        counter = 99;
+        console.log(add()); // 1
+        console.log(add()); // 1
+
+    Tujuan agar variabel counter itu tdk terganggu itu tercapai tp malah selalu diatur nilainya menjadi 0.
+
+
+
+    --> Contoh 4 :
+
+        let add = function() {
+            let counter = 0;
+
+            return function() { // Kita pkk closure supaya yg dikembalikan adlh fungsi, bkn nilai counter. Variabel counter akan mengacu ke nilai counter sblmnya
+                return ++counter;
+            }
+        }
+
+        console.log(add()); // f () { ++counter; }
+
+        let a = add();
+        console.log(a()); // 1
+        console.log(a()); // 2
+
+    Seolah-olah counter itu jd private krn gk bs diakses dr luar tp nilainya tetap dipertahankan krn dia menjadi closure
+
+
+
+    --> Agak aneh klo kita pkk let a untuk menyimpan function. Jd kita pkk Immidiately Invoke Function:
+
+        let add = (function() {
+            let counter = 0;
+
+            return function() {
+                return ++counter;
+            }
+        })();
+
+        console.log(add()); // 1
+        console.log(add()); // 2
+
+        counter = 77;
+        console.log(add()); // 3
+        console.log(add()); // 4
+
+    --> let add = (function() { ... }) adlh Immidiately Invoke Function dan kita tambahkan (); diujungnya supaya lngsng dijalankan Immidiately Invoke Function-nya sehingga ketika di-assign ke variabel add, lngsng dijalankan Inner Function-nya.
+
+
+
+
+
+    ~ `var` VS `let` VS `const`
+
+- Klo ada script:
+
+        console.log(i); // 'undefined'
+        var i = 10;
+    
+    --> Krn JS pkk konsep hoisting, yg terjadi adlh:
+
+        var i; // Diisi dgn undefined
+        console.log(i);
+        i = 10;
+
+
+
+- Bhs pemrograman lain gk mengizinkan kita untuk mengakses variabel di dlm suatu blok kode program dr luar krn menganut Block Scope, sedangkan JS menganut Function Scope krn durasi pembuatannya cuma 10 hari, tp diakui Block Scope lbh baik (~ Brendan Eich):
+        for( var i = 0; i < 10; i++ ) { ... }
+        console.log(i); // '10'
+    
+    --> Klo bhs pemrograman lain, variabel i gk bs diakses dr luar blok kode `for`. Makanya kita pkk `let` supaya kyk bhs pemrograman lain.
+
+- JS gk bs akses klo:
+        function tes() {
+            for( var i = 0; i < 10; i++ ) { ... }
+        }
+
+        tes(); // Klo gk panggil fungsinya, maka gk akan dicetak apa-apa
+
+        console.log(i); // ReferenceError: i is not defined
+
+
+
+- Programmer JS mengakali supaya variabelnya berperilaku sama dgn variabel di bhs pemrograman lain tp tetap menggunakan Function Scope dgn menggunakan Immidiately Invoke Function Expression (IIFE) atw Self Invoking Anonymous Function (SIAF) supaya variabel dlm function nya gk bs diakses dr luar sehingga gk bentrok sama variabel yg namanya sama dgn nama variabel yg kwn tim kita gunakan tp kegunaannya berbeda:
+
+        (function() {
+            for( var i = 0; i < 10; i++ ) { ... } 
+        }());
+
+        console.log(i); // ReferenceError: i is not defined
+
+
+
+- Itu cara lama. Sejak ES6 bs kita ganti `var` menjadi `let` supaya menjadi Block Scope.
+
+
+
+- Klo variabelnya gk akan diubah lg, maka pkk const (konstanta) untuk meminimalisir perubahan state krn const gk sepenuhnya immutable. sehingga dia bs aja berubah tp caranya agak beda:
+
+        const mhs = { nama: 'Saiful'; }
+
+        mhs.nama = 'Sani'; // Msh bs
+
+        const mhs = { nama: 'Sani'; } // Ganti objek mhs dgn objek baru akan menghasilkan error
+    
+
+
+    --> Gtu jgk kasusunya dgn array:
+        const i = [1, 2, 3];
+
+        i = [1, 2, 3, 4]; // Error
+        
+        i.push(4); // Bs        
+
+
+
+
+
+    ~ Arrow Function
+
+- Bentuk lain yg lbh ringkas dr Function Expression
+    --> Function Declaration:
+        function sapa(nama) {
+            alert('Yo ' + nama);
+        }
+
+        sapa('Saiful');
+
+
+
+    --> Function Expression (anonymous function):
+        let sapa = function(nama) {
+            alert('Yo ' + nama);
+        }
+
+        sapa('Saiful');
+
+
+
+    --> Arrow Function (Contoh 1):
+        let sapa = (nama) => {
+            alert('Yo ' + nama);
+        }
+
+        sapa('Saiful');
+
+
+
+    --> Arrow Function (Contoh 2):
+        let sapa = (nama) => { return `Yo ${nama}`; }
+
+        console.log(sapa('Saiful'));
+
+
+
+    --> Arrow Function (Contoh 2, klo cuma satu parameter):
+        let sapa = nama => { return `Yo ${nama}`; }
+
+        console.log(sapa('Saiful'));
+
+
+
+    --> Arrow Function (Contoh 2, klo cuma return (implicit return)):
+        let sapa = nama => { `Yo ${nama}`; }
+
+        console.log(sapa('Saiful'));
+
+
+
+    --> Arrow Function (Contoh 2, klo cuma return (implicit return) bs dibuat lbh ringkas):
+        let sapa = nama => `Yo ${nama}`;
+
+        console.log(sapa('Saiful'));
+
+
+
+    --> Arrow Function (Contoh 3, gk ada parameter hrs tulis kurung):
+        let sapa = () => `Yo`;
+
+        console.log(sapa());
+
+
+
+    --> Arrow Function (Contoh 3, lbh dr satu parameter hrs tulis kurung):
+        let sapa = (nama, namaUjung) => `Yo ${nama} ${namaUjung}`;
+
+        console.log(sapa('Saiful', 'Sani'));
+
+
+
+- Biasanya Arrow Function gk dibuat sesederhana itu. Biasanya pkk Function Map, cnthnya untuk memetakan sebuah function ke dlm array, kita ingin tahu brp panjang karakter dr setiap nama mahasiswa:
+    --> Function Map biasa:
+        let mhs = let mahasiswa = ['Saiful', 'Sani'];
+        let jumlahHuruf = mahasiswa.map(function(nama) {
+            return nama.length;
+        });
+
+        console.log(jumlahHuruf);
+    
+    
+
+    --> Arrow Function:
+        let mhs = let mahasiswa = ['Saiful', 'Sani'];
+        let jumlahHuruf = mahasiswa.map(nama => nama.length );
+
+        console.log(jumlahHuruf);
+    
+
+
+    --> Arrow Function tp mw mengembalikan objek:
+    --> Gk blh buat { nama.length } krn klo pkk kurung kurawal dikira mw return. Jd bungkus pkk kurung biasa.
+        let mhs = let mahasiswa = ['Saiful', 'Sani'];
+        let jumlahHuruf = mahasiswa.map(nama => ({ nama: nama, panjangNama: nama.length }) );
+
+        console.table(jumlahHuruf);
+    
+
+
+    --> Arrow Function tp mw mengembalikan objek:
+    --> Klo mw tampilin nama objek yg sama dgn nama propertinya, bs tulis salah satu aja
+        let mhs = let mahasiswa = ['Saiful', 'Sani'];
+        let jumlahHuruf = mahasiswa.map(nama => ({ nama, panjangNama: nama.length }) );
+
+        console.table(jumlahHuruf); // Untuk mencetak objek dlm bentuk tabel
+
+
+
+- Klo kita pkk `this` di Constructor Function (pembuatannya pkk Function Expression), keyword `this` mengacu pada objeknya. Klo ada method dlm objek trsbt dan ingin menggunakan properti objeknya, maka hrs diawali dgn `this.`:
+        const Mahasiswa = function() {
+            this.nama = 'Saiful'; // `this` mengacu pada objek Mahasiswa
+
+            this.sapa = function() {
+                console.log(`Yo ${this.nama}`);
+            }
+        }
+
+        const saiful = new Mahasiswa();
+
+
+
+- Pembuatan Constructor Function gk blh pkk Arrow Function. Klo method yg bs tp di Arrow Function gk menyimpan konsep `this` di dlm function, dia nyari di luarnya:
+        const Mahasiswa = function() {
+            this.nama = 'Saiful'; // `this` mengacu pada objek Mahasiswa
+
+            this.sapa = () => {
+                console.log(`Yo ${this.nama}`);
+            }
+        }
+
+        const saiful = new Mahasiswa();
+    
+
+
+    --> Nampaknya sama tp klo kita buat objeknya bkn pkk Object Literal:
+        const mhs1 = {
+            nama: 'Saiful',
+            sapa: function() {
+                console.log(`Yo ${this.nama}`);
+            }
+        }
+
+        mhs1.sapa();
+    
+
+
+    --> Ketika pkk Arrow Function:
+        const mhs1 = {
+            nama: 'Saiful',
+            sapa: () => {
+                console.log(`Yo ${this.nama}`); // `this.nama` bernilai undefined
+                console.log(this); // Menyetak object window
+            }
+        }
+
+        mhs1.sapa();
+    
+    --> Object Literal dan Arrow Function gk punya konsep `this`. Di dlm Arrow Function, dicari `this` di dlm Lexical Scope nya tp gk ditemukan krn Arrow Function gk punya konsep `this`. Lalu dicari ke properti objeknya, tp gk ditemukan properti yg pkk `this` krn Object Literal jg gk punya konsep `this`. Dicari terus sampe object window.
+
+
+
+    --> Contoh lain:
+        const Mahasiswa = function() {
+            this.nama = 'Saiful';
+            this.umur = 22;
+
+            this.sapa = function() { // Function Expression gk kena hoisting krn dia disimpan ke dlm variabel
+                console.log(`Yo ${this.nama}`);
+            }
+
+            setInterval(function() { // Function Declaration kena hoisting
+                console.log(this.umur++); // 'NaN' krn akan dicek `this` punya global (window) akibat kena hoisting
+                console.log(this); // Objek Window
+            }, 500); // Jalankan method ini setiap 500 milidetik (0,5 detik)
+        }
+
+        const saiful = new Mahasiswa();
+    
+
+    --> Jd kita pkk Arrow Function krn Arrow Function gk punya konsep `this`, jd dia nyari ke Lexical Scope (scope yg di luarnya):
+        const Mahasiswa = function() {
+            this.nama = 'Saiful';
+            this.umur = 22;
+
+            this.sapa = function() {
+                console.log(`Yo ${this.nama}`);
+            }
+
+            setInterval(() => {
+                console.log(this.umur++);
+            }, 500);
+        }
+
+        const saiful = new Mahasiswa();
+
+
+
+
+
+    ~ Higher Order Function
+
+- Fungsi yg menggunakan fungsi lain dlm dirinya, baik digunakan sbg argumen atw pun sbg return value. Fungsi yg digunakan di dlm fungsi Higher Order Function ini disebut sbg callback.
+    --> Cnthnya di fungsi addEventListener kan kita taruh fungsi buatan kita untuk menjalankan event. Maka, fungsi addEventListener() adlh Higher Order Function dan fungsi buatan kita disebut sbg callback.
+
+- Dlm JS, fungsi itu adlh first class function dan dianggap sbg objek.
+
+- Dgn kita pkk function, kita bs buat program kita menjadi abstrak. Selain itu, kita jg membuat program kita menjadi mengikuti Functional Programming sehingga lbh efektif, efisien, dan optimal.
+    --> Cnthnya inti programnya adlh looping 10 kali. Jd kita buat `for` yg isinya `i = 0; i < 10`. Ketika kita ingin mengulangnya sbnyk 20 kali, maka kita hrs ganti inti dr program trsbt, yaitu di bagian `i < 10`. Klo kita pkk fungsi, kita bs menjadikannya lbh abstrak dgn membuat 10 itu menjadi argumen fungsi, sebutlah `n`. Jd nilai n ini saja yg kita ganti ganti ketika fungsi dipanggil.
+
+- Foreach tdk menghasilkan array baru, sedangkan method filter, map, dan reduce dr objek Array menghasilkan array baru.
+
+- Contoh Array.filter:
+        const angka = [10, -3, -9, 0, 6, 2, 7, -10];
+
+        const angkaBaru = angka.filter( a => a >= 0 );
+
+
+
+- Contoh Array.map:
+        const angka = [10, -3, -9, 0, 6, 2, 7, -10];
+
+        const angkaBaru = angka.map( a => a * 2 );
+
+
+
+- Contoh Array.map:
+        const angka = [10, -3, -9, 0, 6, 2, 7, -10];
+
+        const angkaBaru = angka.reduce((accumulator, currentValue) => accumulator + currentValue);
+    
+    --> accumulator adlh hasil pertahap dr proses yg dilakukan dan currentValue adlh elemen yg sedang dibaca menggunakan looping. Method reduce jg memiliki argumen nilai pertama yg bs kita taruh setelah argumen currentValue, default-nya adlh 0.
+        --> accumulator = 0   |   currentValue = 0
+            accumulator = 10  |   currentValue = 10
+            accumulator = 7   |   currentValue = -3
+            accumulator = -2  |   currentValue = -9
+            ...
+            accumulator = 3   |   currentValue = -10
+
+
+
+- Contoh Method Chaining (pkk titik):
+    --> Cari angka > 5, kalikan angka trsbt dgn 3, dan jumlahkan semua angkanya.
+
+        const angkaBaru = angka.filter(a => a > 0).map(a => a * 3).reduce((acc, cur) => acc + cur);
+
+
+
+
+
+    ~ Template Literal / String Literal
+
+- Template literal adlh string literal yg memungkinkan adanya expression di dlmnya. (~ MDN Web Docs)
+
+- String literal itu string yg biasa kita gunakan, seperti yg kita simpan ke dlm variabel atw kita cetak pkk `console.log()`.
+    --> Biasa kita buat pkk kutip satu, kutip dua, atw back tick.
+    --> Klo di PHP, kutip dua bs melakukan interpolasi. Klo di JS gk bs, jd sama aja dgn kutip satu.
+    --> Untuk buat Template Literal hrs pkk back tick sehingga bs buat:
+        --> String biasa
+            `String 1`
+
+
+
+        --> Multi-line String (klo pkk kutip satu atw dua hrs pkk escape character newline, \n)
+            `String 1
+            String 2`
+
+
+
+        --> Embedded Expression
+            `String ${nama} text`
+
+            console.log(`String ${alert( `Yo ${nama}` )} text`);
+
+            console.log(`${ (x % 2 == 0) ? 'genap' : 'ganjil' }`);
+
+
+
+        --> HTML Fragments
+            let elemenHtml = `<div>
+                <span class="sapa"> Yo! </span>
+            </div>`;
+
+            --> Kita hrs tulis manual tag HTML nya krn kita ngodig nya di file JS. Jd supaya bs pkk emmet HTML di JS, khusus VSCode, buka settings, cari 'includelang', klik logo roda (logo settings) di bagian emmet, pilih 'Copy Settings as JSON', cari JSON di bagian pencarian di Settings VSCode, taruh koma di bagian paling akhir settings yg sudah ada, enter, paste yg td dh kita copy, isikan dgn:
+                "javascript": "html"
+            
+            --> Jd hasil tambahan isi file settings.json :
+                ,
+                "emmet.includeLanguages": {
+                    "javascript": "html"
+                }
+
+        
+
+
+        --> Expression Interpolation (seperti kutip dua di PHP)
+            `Hasil dari ${a} ditambah ${b} adalah ${a + b}`
+        
+
+
+        --> Tagged Template
+            tag `String ${nama} text`
+
+            --> Kegunaannya:
+                1. Escaping / Sanitize HTML Tags = menghilangkan method onload untuk menjalankan script jahat. Pkk library sanitize.
+                2. Translation & Internationalization = Alih bahasa. Pkk library i18n untuk translate ke bahasa yg diinginkan
+                3. Styled Components = Memodifikasi tampilan HTML berdasarkan input yg diberikan (misalkan dr API), seperti memberikan highlight. Biasanya dipkk di ReactJS.
+
+
+
+
+
+    ~ Destructuring Variable / Destructuring Assignment
+
+- Expression pd JS yg membuat kita dpt 'membongkar' nilai dr array atw properti dr object ke dlm variabel yg terpisah. (~ MDN Web Docs)
+
+
+
+
+
+    ~ Looping baru di JS modern, yaitu for...of dan for...in
+
+- `for...of` melakukan pengulangan (loop iterating) dr iterable object, yaitu String, Array, Array-Liked Object (Arguments / NodeList), TypedArray, Map, Set, User-defined Iterables.
+
+- `for...in` melakukan pengulangan hanya pada enumerable (properti objek)
+
+- ForEach hanya untuk looping array.
+
+
+
+
+
+    ~ Spread Operator dan Rest Parameters
+
+- Sama-sama menggunakan `...`.
+
+- Spread Operator memecah (expand/unpack) iterables menjadi single element.
+    --> Bs digunakan untuk menggabungkan array.
+
+- Klo ambil data dr HTML, itu bkn array, melainkan NodeList. Jd gk bs pkk method map. Jd ubah dlu menjadi array pkk method `Array.from()` atw pkk Spread Operator.
+
+- Rest Parameters merepresentasikan argumen pd function dgn jmlh yg tdk terbatas menjadi sebuah array. Hanya bs digunakan di akhir parameter fungsi. Bs jg digunakan pd array destructuring, object destructuring, dan untuk fungsi filteringBy().
+
+- Di dlm fungsi ada keyword arguments, dia bentuknya bkn array, tp object-liked array. Sedangkan Rest Parameters bentuknya lngsng array.
+
+
+
+
+
+    ~ Asynchronous Programming
+
+- Teknik-tekniknya:
+    --> callback
+    --> promise
+    --> ajax
+    --> Async & Await
+
+- JS = A single-threaded, non-blocking, asynchronous and concurrent language. (~ latenflip.com)
+
+- Thread = Urutan eksekusi kode yg dpt dilakukan secara bebas / independen satu sama lain. Krn JS single-threaded, maka cuma bs kerjain satu call (task) dlm satu wkt.
+    --> Lingkungan eksekusi task.
+
+- Non-Blocking = Klo lg kerjain task1, blh lngsng lanjut ke task2.
+    --> Teknik ngoding untuk yg berkenaan dgn input dan output.
+
+- Asynchronous + single-threaded (concurrency) = Lg kerjain task1, walaupun blm selesai bs kerjain task2 dlu, nti balik lg ke task1, lanjut lg task 2, ..., selesaikan task1, baru selesaikan task2.
+    --> Asynchronous itu teknik ngoding untuk yg berkenaan dgn HTTP Request.
+    --> Concurrent dan parallelism terkait lingkungan eksekusi task dan jg tntng infrastruktur / virtualisasi.
+
+- Asynchronous + multi-threaded (parallelism).
+
+
+
+- V8 engine yg ditanam ke dlm web browser digunakan untuk menjalankan JS. Isinya adlh heap (alokasi memori, penyimpanan variabel dan fungsi, dan hoisting) dan stack (pemanggilan fungsi dan eksekusi script).
+
+- Klo ada program
+        console.log(1);
+        console.log(2);
+        console.log(3);
+    
+    --> Cara kerjanya `console.log(1);` masuk ke dlm stack, lalu dijalankan. Klo dh selesai, hapus `console.log(1);` dr stack dan lanjut masukin `console.log(2);` sampe selesai dijalankan dan dihapus dr stack, lalu lanjut masukin, kerjain, dan hapus `console.log(3);` di stack. Tp klo ada program yg butuh wkt yg lama untuk proses kerjainnya:
+        console.log(1);
+        prosesSuperKompleks(); // Image processing
+        console.log(3);
+    
+    --> Maka, `console.log(3);` membutuhkan wkt yg cukup lama untuk mulai dikerjakan krn hrs tunggu `prosesSuperKompleks();` dimasukkan ke dlm stack, selesai dikerjakan, dan dihapus dr stack. Kejadian ini bernama blocking. Pengguna web hrs nunggu loading-nya, jd gk bs lakuin apa-apa, gk bs input, gk bs tekan tombol, dll.. Bs ditangani dgn Asynchronous Callback krn adanya Event Loop:
+        console.log(1);
+        
+        setTimeout(() => {
+            prosesSuperKompleks();
+        }, 5000);
+
+        console.log(3);
+    
+    --> Sehingga jalani `console.log(1);`, lalu seakan-akan skip yg `setTimeout(...)`, jalani `console.log(3);`, dan setelah 5 detik baru jalani lg `setTimeout(...)`.
+
+- Sbnrnya yg menjalankan JS kita di browser bkn cuma V8, tp ada jg Web API yg menangani Asynchronous Callback yg bkn termasuk V8, penggunaannya seperti pd kasus `setTimeout()` yg ditunda pengerjaannya krn dipindahkan dr stack ke Web API.
+    
+    --> Cnth Web API, seperti `console.log()`, DOM, ajax (XMLHttpRequest atw jQuery), setTimeout, setInterval, .... Jd klo mereka ada masuk ke dlm stack, pindahkan dlu ke Web API. `console.log()` termasuk Web API, bkn punya V8, tp krn dia bkn Asynchronous Callback, maka bs lngsng dijalani.
+
+    --> Setelah wkt tunggu setTimeout nya selesai atw klo di DOM, setelah tombolnya diklik atw klo di ajax, setelah data berhasil diambil dr API, callback nya gk lngsng dijalankan, melainkan Web API akan menyimpannya ke dlm Callback Queue.
+    
+    --> Lalu di Callback Queue ada Event Loop untuk cek di dlm Callback Queue ada callback gk. Klo ada, simpan ke dlm stack jika di stack gk ada tumpukan perintah yg akan dieksekusi (tunggu sampe stack kosong) dan di dlm stack, V8 jalani callback nya seperti biasa. Jd, urutan proses untuk:
+        console.log(1);
+        
+        setTimeout(() => {
+            prosesSuperKompleks();
+        }, 5000);
+
+        console.log(3);
+
+    --> `console.log(1);` masuk ke dlm stack, dieksekusi, dan hapus dr stack.
+
+    --> `setTimeout(..., 5000);` masuk ke dlm stack, tp krn dia Asynchronous Callback, maka pindahkan ke Web API.
+
+    --> Web API akan nunggu 5 detik baru eksekusi isi `setTimeout()`, yaitu `prosesSuperKompleks();`. Sedangkan di dlm stack lanjut eksekusi `console.log(3);`.
+
+    --> Setelah 5 detik, Web API gk lngsng masukin `prosesSuperKompleks();` ke dlm stack, melainkan dimasukin ke dlm Callback Queue. Klo di dlm stack msh ada isi, maka tunggu sampe stack nya kosong baru Event Loop masukin `prosesSuperKompleks();` ke dlm stack.
+
+    --> Walaupun gk taruh atw kita taruh parameter delay nya 0 di fungsi `setTimeout()`, dia akan tetap dimasukin ke dlm Web API dan dijalani seperti yg dh dijelasin krn dia Asynchronous Callback. Bedanya skrng gk tunggu 5 detik.
+
+    --> http://latenflip.com/loupe/
+
+
+
+
+
+    ~ Callback
+
+- Function yg dikirimkan sbg argumen pd function lain.
+
+- Function yg dieksekusi setelah function lain dikerjakan.
+
+- Untuk pkk Asynchronous Callback, bs pkk ajax yg kita tulis menggunakan vanilla JS (JS murni) atw pkk CDN jQuery atw bs pkk `fetch()` untuk JS modern tp yg dikembalikan bkn datanya, melainkan promise.
+
+
+
+- Klo pkk starter template punya Bootstrap, itu pkk jQuery yg slim, jd gk ada ajax. Ganti aja dgn yg uncompressed atw minified dr jQuery CDN.
+
+- jQuery tu simbolnya `$`. Klo mw panggil method ajax pkk jQuery, tulisnya `$.ajax();`
+
+- Klo mw isi HTML pkk jQuery, tulis `$('.movie-container').html(cards);`
+
+- Krn kita pkk jQuery, yaitu library eksternal, maka ada resource yg digunakan sehingga defaultnya performanya lbh lambat dibandingkan kita gunakan bawaan JS. Untuk gantiin ajax sekaligus penyederhanaan kode, ada yg namanya `fetch()` di JS modern tp hrs pahami dlu `Promise()`.
+
+
+
+
+
+    ~ Promise
+
+- Objek yg merepresentasikan keberhasilan atw kegagalan dr sebuah event yg asynchronous di masa yg akan dtng.
+
+- Salah satu cara untuk menangani callback hell, yaitu ketika kode kita terlalu bnyk callback sehingga penulisan kodenya terlalu menjorok ke dlm.
+
+- Janji bs terpenuhi atw bs ingkar
+    --> Janji (terpenuhi / ingkar) = states (fulfilled / rejected / pending)
+        --> Janji disebut states. Klo terpenuhi berarti fulfilled dan klo ingkar berarti rejected. Yg pending itu adlh wkt tunggu sblm janjinya terpenuhi atw tidak.
+    
+        --> Untuk menjalankan keadaannya (states), ada 3 fungsi callback, yaitu reslove, reject, dan finally:
+            --> callback(reslove / reject / finally)
+        
+        --> Dlm promise ini, ada aksi yg dilakukan ketika janjinya terpenuhi atw tdk terpenuhi. Klo terpenuhi lakukan then dan klo gk terpenuhi maka lakukan catch.
+            --> aksi(then / catch)
+                --> finally akan dijalankan ketika promise nya dh selesau pending, jalani finally dlu baru salah satu dr then atw catch. Biasa digunakan untuk mematikan animasi loading. Wkt baru mulai prosesnya, jalani animasi loading dan ketika selesai pending, matiin animasi loading di finally.
+
+
+
+
+
+
+    ~ Fetch
+
+- Method pd API JS untuk mengambil resource dr jaringan dan mengembalikan promise yg selesai (fulfilled) ketika ada response yg tersedia. (~ MDN)
+
+- fetch(resource, init)
+    --> resource: URL (alamat dr sumber yg akan kita ambil), Request Object (representasi permintaan sumber)
+    --> init = konfigurasi tambahan pd sebuah request berbentuk objek: method (GET, POST), headers, body, mode, cache, referrer, referrerPolicy, integrity, keepalive, signal
+    --> Hasil dr fetch berupa properti dan method di objek response
+        --> Properti: headers, ok (`response.ok`), redirected, status (`if( status === 200 ) { ... }`), statusText, type, url, body
+        --> Method (mengembalikan promise dan klo resolve baru jd objek): clone(), error(), redirect(), blob(), formData(), json(), text()
+
+- API pd JS modern untuk ambil data secara asynchronous (ajax), seperti melakukan XMLHttpRequest pd vanilla JS atw pkk method ajax pd jQuery.
+
+- Klo seleksi elemen pkk jQuery kan gampang, bs tulis `$('.search-button');`. Sedangkan klo pkk fetch (vanilla JS), kita hrs pkk DOM Selection.
+
+- Ingat, `fetch()` adlh fungsi di JS yg mengembalikan promise. Jd kita hrs kasi method `.then()` ketika datanya 'fulfilled' (berhasil didpt) dan `.catch()` ketika datanya 'rejected' (gagal diambil).
+    --> Hbs pkk method `.then(response => console.log(response) );`, kita msh blm bs liat datanya. Jd tambahin method `.json()` yg merupakan method dr response di dlm isi Arrow Function nya ( `console.log(response.json())` ) yg akan mengembalikan promise. Jd kita buat lg then sekali lg. Cnthnya:
+
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', function() {
+
+            const inputKeyword = document.querySelector('.input-keyword');
+            fetch( 'http://www.omdbapi.com/?apikey=dca61bcc&s=' + inputKeyword.value)
+                .then(response => console.log(response.json()) );
+
+        });
+            
+        
+    --> menjadi :
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + inputKeyword.value)
+                .then(response => response.json())
+                .then(response => console.log(response));
+        });
+
+    --> Klo mw masukin ke dlm HTML:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + inputKeyword.value)
+                .then(response => response.json())
+                .then(response => {
+                    const movies = response.Search;
+                    let cards = '';
+                    movies.forEach( m => cards += showCards(m) ); // Function showCards() adlh fungsi yg mengembalikan String Literal untuk membuat isi HTML nya diisi dgn data yg didpt
+                    const movieContainer = document.querySelector('.movie-container');
+                    movieContainer.innerHTML(cards);
+                });
+        });
+    
+    --> Klo mw lanjut yg isi modal dgn detail filmnya:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + inputKeyword.value)
+                .then(response => response.json())
+                .then(response => {
+                    const movies = response.Search;
+                    let cards = '';
+                    movies.forEach( m => cards += showCards(m) ); // Function showCards() adlh fungsi yg mengembalikan String Literal untuk membuat isi HTML nya diisi dgn data yg didpt
+                    const movieContainer = document.querySelector('.movie-container');
+                    movieContainer.innerHTML(cards);
+
+                    // Ketika tombol detail diklik
+                    const modalDetailButton = document.querySelectorAll('.modal-detail-button');
+                    modalDetailButton.forEach(btn => {
+                        btn.addEventListener('click', function() { // Gk blh pkk Arrow Function krn kita butuh `this`, sedangkan Arrow Function gk punya konsep `this`
+                        const imdbid = this.dataset.imdbid;
+                        fetch('http://www.omdbapi.com/?apikey=dca61bcc&i=' + imdbid)
+                            .then(response => response.json())
+                            .then( m => {
+                                const movieDetail = showMovieDetail(m); // Function showMovieDetail() adlh fungsi yg mengembalikan String Literal untuk membuat isi HTML nya diisi dgn data yg didpt
+                                const modalBody = document.querySelector('.modal-body');
+                                modalBody.innerHTML = movieDetail;
+                            });
+                        });
+                    });
+                });
+        });
+
+
+
+- Refactor supaya lbh mudah dibaca. Kita buat fungsi untuk fetch data (`getMovies()`) dan tampilan modal (`updateUI()`):
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            const movies = getMovies(inputKeyword.value);
+            // updateUI(movies);
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+
+    --> Walaupun `fetch()` adlh method asynchronous, JS gk tw bahwa method getMovies itu asynchronous krn cara kita tulis adlh synchronous. Jd kasi tw bahwa fungsi callback event listener searchButton itu ada fungsi asynchronous dgn menambahkan keyword `async` di awal fungsi callback event listener nya dan kasi keyword `await` untuk fungsi asynchronous nya:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', async function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            const movies = await getMovies(inputKeyword.value); // getMovies() adlh fungsi asynchronous yg mengembalikan promise. Jd jgn lngsng dimasukin ke dlm `const movies`, tunggu dlu sampe promise nya resolve baru masukin ke dlm `const movies`
+            // updateUI(movies);
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+    
+    --> Lalu, buat fungsi `updateUI()`:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', async function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            const movies = await getMovies(inputKeyword.value); // getMovies() adlh fungsi asynchronous yg mengembalikan promise. Jd jgn lngsng dimasukin ke dlm `const movies`, tunggu dlu sampe promise nya resolve baru masukin ke dlm `const movies`
+            updateUI(movies);
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+
+        function updateUI(movies) {
+            let cards = '';
+            movies.forEach( m => cards += showCards(m) );
+            const movieContainer = document.querySelector('.movie-container');
+            movieContainer.innerHTML(cards);
+        }
+    
+    --> Untuk bagian ketika tombol detail diklik, gk bs lngsng kita tulis event handler nya krn dia akan dijalni dluan pdhl tombol detail nya blm ada. Soalnya, tampilan awal halaman hanya search bar. Setelah dilakukan pencarian baru muncul card dan tombol detail di masing-masing card. Jd, kita pkk event binding supaya kasi event ke elemen yg awalnya blm ada tp ketika dia ada, event nya bs berjln:
+         const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', async function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            const movies = await getMovies(inputKeyword.value); // getMovies() adlh fungsi asynchronous yg mengembalikan promise. Jd jgn lngsng dimasukin ke dlm `const movies`, tunggu dlu sampe promise nya resolve baru masukin ke dlm `const movies`
+            updateUI(movies);
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+
+        // Event Binding
+        document.addEventListener('click', async function(elemen) {
+            if( elemen.target.classList.contains('modal-detail-button') ) {
+                const imdbid = elemen.target.dataset.imdbid;
+                const movieDetail = await getMovieDetail(imdbid);
+                updateUIDetail(movieDetail);
+            }
+        });
+
+        function getMovieDetail(imdbid) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&i=' + imdbid)
+                .then(response => response.json())
+                .then( m => m);
+        }
+
+        function updateUIDetail(m) {
+            const movieDetail = showMovieDetail(m);
+            const modalBody = document.querySelector('.modal-body');
+            modalBody.innerHTML = movieDetail;
+        }
+
+        function updateUI(movies) {
+            let cards = '';
+            movies.forEach( m => cards += showCards(m) );
+            const movieContainer = document.querySelector('.movie-container');
+            movieContainer.innerHTML(cards);
+        }
+
+
+
+
+
+    ~ `async` (Asynchronous Function) dan `await`
+
+- Asynchronous Function adlh function yg bekerja secara asynchronous (melalui event loop) yg menghasilkan (implisit) promise sbg return value-nya. Tp carai penulisan kodenya menggunakan penulisan yg synchronous (standar).
+
+- Sebuah `async` function dpt memiliki keyword `await` di dlmnya yg memberhentikan sementara eksekusi fungsinya sambil menunggu promise-nya selesai.
+
+
+
+
+
+    ~ Error Handling `fetch()`
+
+- Klo script kita:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', async function() {
+            const inputKeyword = document.querySelector('.input-keyword');
+            const movies = await getMovies(inputKeyword.value);
+            updateUI(movies);
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+
+        function updateUI(movies) {
+            let cards = '';
+            movies.forEach( m => cards += showCards(m) );
+            const movieContainer = document.querySelector('.movie-container');
+            movieContainer.innerHTML(cards);
+        }
+    
+    --> Yg kita buat adlh klo resolve doang. Untuk error, kita bs pkk block `try` dan `catch`:
+        const searchButton = document.querySelector('.search-button');
+        searchButton.addEventListener('click', async function() {
+            try{
+                const inputKeyword = document.querySelector('.input-keyword');
+                const movies = await getMovies(inputKeyword.value);
+                updateUI(movies);
+            } catch(err) {
+                alert(err);
+            }
+        });
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => response.json())
+                .then(response => response.Search);
+        }
+
+        function updateUI(movies) {
+            let cards = '';
+            movies.forEach( m => cards += showCards(m) );
+            const movieContainer = document.querySelector('.movie-container');
+            movieContainer.innerHTML(cards);
+        }
+    
+    --> Skrng gk ditampilin error default dr browser, melainkan yg kita tulis. Error yg ditangkap adlh ketika isi search nya kosong atw movie tdk ditemukan. Klo URL (network)-nya yg salah, msh tampilin error bawaan browser. Soalnya, klo kita pkk fetch, error yg ditangkap cuma error network nya aja, seperti salah alamat URL, API key, dan parameter GET di URL. Sedangkan error isi search nya kosong atw movie tdk ditemukan td bkn error dr fetch, melainkan error dr browser krn wkt mw jalani fungsi `updateUI()`, argumen `movies` nya kosong. Jd klo kita gk jalani fungsi updateUI() dgn isi search nya kosong atw movie tdk ditemukan, gk akan keluar error nya krn gk masuk ke dlm catch. Soalnya fetch hanya akan gagal ketika network nya error. Jd kita hrs tangani secara manual di dlm `fetch( ... )`. Misalkan API key nya salah, maka akan ada error unauthorized tp fetch nya jln. Seharusnya yg `response.json()` itu dijlnkan ketika datanya dh bener (ada isi di search dan film nya ditemukan)
+    
+        function getMovies(keyword) {
+            return fetch('http://www.omdbapi.com/?apikey=dca61bcc&s=' + keyword)
+                .then(response => {
+                    if( !response.ok ) {
+                        throw new Error(response.statusText);
+                    }
+
+                    return response.json();
+                })
+                .then(response => {
+                    if( response.Response === "False" ) { // OMDB ada kembaliin pesan klo search nya kosong di dlm objek Response
+                        // console.log(response);
+                        throw new Error(response.Error);
+                    }
+
+                    return response.Search;
+                });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
