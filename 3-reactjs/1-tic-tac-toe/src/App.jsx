@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 
 function Square({ value, onSquareClick }) {
@@ -5,13 +6,18 @@ function Square({ value, onSquareClick }) {
 }
 
 export default function Board() {
-  // Lifting state up
   const [squares, setSquares] = useState( Array(9).fill(null) );
+  const [xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i) {
-    const newSquares = squares.slice(); // agar array squares bersifat immutability
-    newSquares[i] = 'X';
+    
+    if( squares[i] ) return;
+
+    const newSquares = squares.slice();
+
+    newSquares[i] = ( xIsNext ) ? newSquares[i] = 'X' : newSquares[i] = 'O';
     setSquares(newSquares);
+    setXIsNext(!xIsNext);
   }
 
   return (
