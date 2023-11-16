@@ -46,7 +46,7 @@ export default function App() {
             <Header />
             <Form onAddItem={handleAddItem} />
             <GroceryList items={items} onDeleteItem={handleDeleteItem} onToggleItem={handleToggleItem} onClearItems={handleClearItems} />
-            <Footer />
+            <Footer items={items} />
         </div>
     )
 }
@@ -100,18 +100,6 @@ function GroceryList({ items, onDeleteItem, onToggleItem, onClearItems }) {
 
     let sortedItems;
 
-    // if( sortBy === 'input' ) {
-    //     sortedItems = items;
-    // }
-
-    // if( sortBy === 'name' ) {
-    //     sortedItems = items.slice().sort( (a, b) => a.name.localeCompare(b.name) );
-    // }
-
-    // if( sortBy === 'checked' ) {
-    //     sortedItems = items.slice().sort( (a, b) => a.checked - b.checked );
-    // }
-
     switch(sortBy) {
         case 'name':
             sortedItems = items.slice().sort( (a, b) => a.name.localeCompare(b.name) );
@@ -154,6 +142,12 @@ function Item({ item, onDeleteItem, onToggleItem }) {
     );
 }
 
-function Footer() {
-    return <footer className="stats">Ada 10 barang di daftar belanjaan, 5 barang sudah dibeli (50%)</footer>;
+function Footer({ items }) {
+    if( items.length === 0 ) return <footer className="stats">Daftar belanjaan masih kosong</footer>;
+
+    const totalItems = items.length;
+    const checkedItems = items.filter((item) => item.checked).length;
+    const percentage = Math.round((checkedItems / totalItems) * 100);
+
+    return <footer className="stats">Ada {totalItems} barang di daftar belanjaan, {checkedItems} barang sudah dibeli ({percentage}%)</footer>;
 }
