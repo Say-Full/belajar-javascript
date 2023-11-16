@@ -22,11 +22,18 @@ const groceryItems = [
 ];
 
 export default function App() {
+    const [items, setItems] = useState(groceryItems);
+
+    function handleAddItem(item) {
+        // setItems(items.push(item)); // Ini akan mengubah array (state) items secara lngsng sehingga tdk mengimplementasikan konsep immutability. Seharusnya buat dlu duplikat dr array-nya, modifikasi isi array yg baru, dan array baru timpa array lama
+        setItems([...items, item]);
+    }
+
     return (
         <div className="app">
             <Header />
-            <Form />
-            <GroceryList />
+            <Form onAddItem={handleAddItem} />
+            <GroceryList items={items} />
             <Footer />
         </div>
     )
@@ -36,7 +43,7 @@ function Header() {
     return <h1>Catatan Belanjaku 📝</h1>;
 }
 
-function Form() {
+function Form({ onAddItem }) {
     // const quantityNum = Array(5); // Array kosong
     // const quantityNum = [...Array(5))]; // Sebuah array yg setiap elemnnya berisi undefined
     const quantityNum = [...Array(5)].map( (_, i) => ( // parameter pertama adlh item tiap indeks array tp krn kita gk pkk, kita tampung ke dlm `_`
@@ -58,7 +65,7 @@ function Form() {
             id: Date.now()
         }
 
-        console.log(newItem);
+        onAddItem(newItem);
 
         setName('');
         setQuantity(1);
@@ -76,12 +83,12 @@ function Form() {
     );
 }
 
-function GroceryList() {
+function GroceryList({ items }) {
     return(
         <>
             <div className="list">
                 <ul>
-                    { groceryItems.map((item) => (
+                    { items.map((item) => (
                         <Item item={item} key={item.id} />
                     )) }
                 </ul>
