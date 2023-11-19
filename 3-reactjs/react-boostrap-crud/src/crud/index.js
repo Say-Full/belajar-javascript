@@ -36,6 +36,13 @@ export default class Crud extends Component {
                 }
             ]
         });
+
+        this.setState({
+            nama: "",
+            deskripsi: "",
+            harga: 0,
+            id: ""
+        });
     };
 
     render() {
@@ -45,7 +52,7 @@ export default class Crud extends Component {
                 <h1>CRUD React-Bootstrap</h1>
 
                 <div className="container mt-4">
-                    <Tabel />
+                    <Tabel foods={this.state.foods} />
                     <Formulir {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
                 </div>
             </div>
