@@ -80,6 +80,16 @@ export default class Crud extends Component {
         });
     };
 
+    hapusData = (id) => {
+        const notSelectedFood = this.state.foods.filter((food) => food.id !== id).map((filteredFood) => {
+            return filteredFood
+        });
+
+        this.setState({
+            foods: notSelectedFood
+        });
+    };
+
     render() {
         return(
             <div>
@@ -87,7 +97,7 @@ export default class Crud extends Component {
                 <h1>CRUD React-Bootstrap</h1>
 
                 <div className="container mt-4">
-                    <Tabel foods={this.state.foods} ubahData={this.ubahData} />
+                    <Tabel foods={this.state.foods} ubahData={this.ubahData} hapusData={this.hapusData} />
                     <Formulir {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
                 </div>
             </div>
