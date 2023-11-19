@@ -25,17 +25,39 @@ export default class Crud extends Component {
     handleSubmit = (event) => {
         event.preventDefault(); // Menghilangkan reload halaman, yaitu fungsi asli suatu form, krn kita ingin membuat single-page application
         
-        this.setState({
-            foods: [
-                ...this.state.foods,
-                {
-                    id: this.state.foods.length + 1,
-                    nama: this.state.nama,
-                    deskripsi: this.state.deskripsi,
-                    harga: this.state.harga
-                }
-            ]
-        });
+        if( this.state.id === "" ) {
+            // Menambahkan data baru
+            this.setState({
+                foods: [
+                    ...this.state.foods,
+                    {
+                        id: this.state.foods.length + 1,
+                        nama: this.state.nama,
+                        deskripsi: this.state.deskripsi,
+                        harga: this.state.harga
+                    }
+                ]
+            });
+        }
+        else {
+            // Fitur Edit = Di dalam array, data yang ingin diubah disimpan sebagai data baru dan baris data yang ingin diubah tersebut dihapus.
+            const notSelectedFood = this.state.foods.filter((food) => food.id !== this.state.id).map((filteredFood) => {
+                return filteredFood
+            });
+            
+            this.setState({
+                foods: [
+                    ...notSelectedFood,
+                    {
+                        id: this.state.foods.length + 1,
+                        nama: this.state.nama,
+                        deskripsi: this.state.deskripsi,
+                        harga: this.state.harga
+                    }
+                ]
+            });
+
+        }
 
         this.setState({
             nama: "",
