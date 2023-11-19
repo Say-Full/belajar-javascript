@@ -45,6 +45,19 @@ export default class Crud extends Component {
         });
     };
 
+    ubahData = (id) => {
+        const selectedFood = this.state.foods.filter((food) => food.id === id).map((filteredFood) => {
+            return filteredFood
+        });
+
+        this.setState({
+            nama: selectedFood[0].nama,
+            deskripsi: selectedFood[0].deskripsi,
+            harga: selectedFood[0].harga,
+            id: selectedFood[0].id
+        });
+    };
+
     render() {
         return(
             <div>
@@ -52,7 +65,7 @@ export default class Crud extends Component {
                 <h1>CRUD React-Bootstrap</h1>
 
                 <div className="container mt-4">
-                    <Tabel foods={this.state.foods} />
+                    <Tabel foods={this.state.foods} ubahData={this.ubahData} />
                     <Formulir {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
                 </div>
             </div>
