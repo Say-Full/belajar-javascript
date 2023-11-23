@@ -9,11 +9,8 @@ class BlogPost extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('http://localhost:3004/posts')
             .then(result => {
-                // console.log(result); // Berisi config, data (100 array of object punya JSONPlaceholder), headers, request, dan objek prototype
-                // Kelebihannya adlh mengembalikan headers. Beberapa backend menyimpan token di headers.
-
                 this.setState({
                     posts: result.data
                 });
@@ -25,7 +22,7 @@ class BlogPost extends Component {
             <Fragment>
                 <p className='section-tittle'>Isi</p>
                 { this.state.posts.map(post => {
-                    return <Post key={ post.id } tittle={ post.tittle } desc={ post.body } />
+                    return <Post key={ post.id } tittle={ post.title } desc={ post.body } />
                 }) }
             </Fragment>
         );
