@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './BlogPost.css';
 import Post from '../../components/Post/Post';
+import axios from 'axios';
 
 class BlogPost extends Component {
     state = {
@@ -8,12 +9,13 @@ class BlogPost extends Component {
     }
 
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            // .then(json => console.log(json)); // Berisi 100 array of object yg tiap object memiliki properti userId, id, tittle, dan body
-            .then(json => {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(result => {
+                // console.log(result); // Berisi config, data (100 array of object punya JSONPlaceholder), headers, request, dan objek prototype
+                // Kelebihannya adlh mengembalikan headers. Beberapa backend menyimpan token di headers.
+
                 this.setState({
-                    posts: json
+                    posts: result.data
                 });
             });
     }
