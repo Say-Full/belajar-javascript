@@ -7,8 +7,9 @@ const Post = (props) => {
                 <img src="https://picsum.photos/200" alt="Gambar dari picsum.photos" />
             </div>
             <div className="content">
-                <p className="tittle">{ props.tittle }</p>
-                <p className="desc">{ props.desc }</p>
+                <p className="tittle">{ props.data.title }</p>
+                <p className="desc">{ props.data.body }</p>
+                <button className="btn-hapus" onClick={() => props.hapusPost(props.data.id)}>Hapus</button>
             </div>
         </div>
     );

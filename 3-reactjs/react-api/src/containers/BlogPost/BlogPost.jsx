@@ -8,7 +8,7 @@ class BlogPost extends Component {
         posts: []
     }
 
-    componentDidMount() {
+    fetchApiData = () => {
         axios.get('http://localhost:3004/posts')
             .then(result => {
                 this.setState({
@@ -16,13 +16,21 @@ class BlogPost extends Component {
                 });
             });
     }
+
+    componentDidMount() {
+        this.fetchApiData();
+    }
+
+    handleHapusPost = (id) => {
+        axios.delete(`http://localhost:3004/posts/${id}`).then(res => { this.fetchApiData(); });
+    }
     
     render() {
         return(
             <Fragment>
                 <p className='section-tittle'>Isi</p>
                 { this.state.posts.map(post => {
-                    return <Post key={ post.id } tittle={ post.title } desc={ post.body } />
+                    return <Post key={ post.id } data={ post } hapusPost={ this.handleHapusPost } />
                 }) }
             </Fragment>
         );
