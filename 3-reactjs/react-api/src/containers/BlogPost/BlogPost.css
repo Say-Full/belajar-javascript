@@ -55,7 +55,7 @@
     margin-top: 18px;
 }
 
-.btn-hapus:hover {
+.btn-hapus:hover, .btn-ubah:hover {
     cursor: pointer;
 }
 
@@ -97,4 +97,14 @@ button.btn-submit {
     text-transform: uppercase;
     font-weight: bold;
     margin-top: 30px;
+}
+
+button.btn-ubah {
+    padding: 12px 18px;
+    background: #8BC34A;
+    color: white;
+    border-radius: 4px;
+    outline: none;
+    margin-top: 18px;
+    margin-right: 10px;
 }

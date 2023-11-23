@@ -9,7 +9,8 @@ const Post = (props) => {
             <div className="content">
                 <p className="tittle">{ props.data.title }</p>
                 <p className="desc">{ props.data.body }</p>
-                <button className="btn-hapus" onClick={() => props.hapusPost(props.data.id)}>Hapus</button>
+                <button className="btn-ubah" onClick={ () => props.ubahPost(props.data) }>Ubah</button>
+                <button className="btn-hapus" onClick={ () => props.hapusPost(props.data.id) }>Hapus</button>
             </div>
         </div>
     );

@@ -11,7 +11,8 @@ class BlogPost extends Component {
             userId: 1,
             title: '',
             body: ''
-        }
+        },
+        isUpdate: false
     }
 
     fetchApiData = () => {
@@ -27,9 +28,32 @@ class BlogPost extends Component {
         axios.post('http://localhost:3004/posts', this.state.formBlogPost)
             .then((res) => {
                 this.fetchApiData();
+                this.setState({
+                    formBlogPost: {
+                        id: 1,
+                        userId: 1,
+                        title: '',
+                        body: ''
+                    }
+                });
             }, (err) => {
                 console.log(err);
             });
+    }
+
+    putDataToApi = () => {
+        axios.put(`http://localhost:3004/posts/${this.state.formBlogPost.id}`, this.state.formBlogPost).then(res => {
+            this.fetchApiData();
+            this.setState({
+                formBlogPost: {
+                    id: 1,
+                    userId: 1,
+                    title: '',
+                    body: ''
+                },
+                isUpdate: false
+            });
+        });
     }
 
     componentDidMount() {
@@ -42,8 +66,12 @@ class BlogPost extends Component {
 
     handleFormChange = (event) => {
         let newFormBlogPost = {...this.state.formBlogPost};
-        newFormBlogPost['id'] = new Date().getTime();
-        newFormBlogPost[event.target.name] = event.target.value;
+
+        if( ! this.state.isUpdate ) {
+            newFormBlogPost['id'] = new Date().getTime();
+        }
+
+        newFormBlogPost[event.target.name] = event.target.value
 
         this.setState({
             formBlogPost: newFormBlogPost
@@ -53,7 +81,14 @@ class BlogPost extends Component {
     }
 
     handleSubmit = () => {
-        this.postDataToApi();
+        this.state.isUpdate ? this.putDataToApi() : this.postDataToApi()
+    }
+
+    handleUbahPost = (data) => {
+        this.setState({
+            formBlogPost: data,
+            isUpdate: true
+        });
     }
     
     render() {
@@ -65,10 +100,10 @@ class BlogPost extends Component {
 
                 <div className="form-tambah-post">
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' placeholder='Tambah judul' onChange={ this.handleFormChange } />
+                    <input type="text" name='title' placeholder='Tambah judul' onChange={ this.handleFormChange } value={ this.state.formBlogPost.title } />
 
                     <label htmlFor="body">Deskripsi</label>
-                    <textarea name="body" id="body" cols="30" rows="10" onChange={ this.handleFormChange } ></textarea>
+                    <textarea name="body" id="body" cols="30" rows="10" onChange={ this.handleFormChange } value={ this.state.formBlogPost.body } ></textarea>
 
                     <button className='btn-submit' onClick={ this.handleSubmit }>Simpan</button>
                 </div>
@@ -76,7 +111,7 @@ class BlogPost extends Component {
 
 
                 { this.state.posts.map(post => {
-                    return <Post key={ post.id } data={ post } hapusPost={ this.handleHapusPost } />
+                    return <Post key={ post.id } data={ post } hapusPost={ this.handleHapusPost } ubahPost={ this.handleUbahPost } />
                 }) }
             </Fragment>
         );
